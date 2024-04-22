@@ -1,0 +1,38 @@
+<section class="section dashboard">
+    <div class="row">
+        <!-- Left side columns -->
+        <div class="col-lg-12">
+            <div class="row">
+                <!-- Top Selling -->
+                <div class="col-12">
+                    <div class="card top-selling overflow-auto">
+                        <div class="card-body pb-0">
+                            <h5 class="card-title">Top Selling</h5>
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Tên danh mục</th>
+                                        <th scope="col">Mô tả</th>                                     
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="dm in list">                                    
+                                        <td>{{ dm.name }}</td>
+                                        <td>{{ dm.description }}</td>                                    
+                                        <td>                                        
+                                            <a href="#" class="btn btn-outline-primary-2 btn-minwidth-lg">
+                                                <span>Chi tiết</span>
+                                                <i class="icon-long-arrow-right"></i>
+                                            </a>
+                                        </td>
+                                    </tr>                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Top Selling -->
+            </div>
+        </div><!-- End Left side columns -->
+    </div>
+</section>
