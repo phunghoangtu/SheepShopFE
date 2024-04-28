@@ -1,9 +1,9 @@
-var app = angular.module("myApp", ["ngRoute"]);
+var app = angular.module("myApp", ["ngRoute", "ngStorage"]);
 
 app.config(function($routeProvider) {
     $routeProvider
         .when("/", {
-            templateUrl : "pages/home.html",
+            templateUrl : "index.html",
             controller : "homeController"
         })
 });
