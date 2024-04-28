@@ -179,23 +179,20 @@
 
                             <table class="table">
                                 <tbody>
-
-                                    <tr>
-                                        <th scope="row">Mã hóa đơn</th>
-                                        <td>Tên nhân viên</td>
-                                        <td>Khách lẻ</td>
+                                    <tr ng-repeat="bill in bills">
+                                        <th scope="row">{{ bill.code }}</th>
+                                        <td>{{ bill.user.username }}</td>
+                                        <td>{{ bill.customer.fullname }}</td>
                                         <td>
-                                            <a href="#"><i class="bi bi-trash"></i></a>
+                                            <a href="" ng-click="deleteBillId(bill.id)"><i class="bi bi-trash"></i></a>
                                         </td>
                                     </tr>
-
-
                                 </tbody>
                             </table>
 
                         </div>
                         <div class="card-body" style="padding: 10px;">
-                            <a href="#" class="btn btn-primary">
+                            <a href="#" ng-click="addBill()" class="btn btn-primary">
                                 Tạo hóa đơn
                             </a>
                             <button class="btn btn-primary">Thanh toán</button>
