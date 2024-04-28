@@ -40,38 +40,86 @@ angular.module("myApp", []).controller("sellController", function ($scope) {
 
   //////////////////////////////////////////////////////
 
-  $scope.scrollLeft = function () {
-    var wrapper = document.querySelector(".scroll-wrapper");
-    wrapper.scrollLeft -= 100;
-  };
+  // Khai báo và gán giá trị cho currentDate và currentTime
 
-  $scope.scrollRight = function () {
-    var wrapper = document.querySelector(".scroll-wrapper");
-    wrapper.scrollLeft += 100;
-  };
+  $scope.currentDate = new Date();
+  $scope.currentTime = new Date();
 
-  /////////////////////////////////////////////////////////////
-
-  $scope.invoices = [];
-  $scope.invoiceCount = 0;
-  $scope.createInvoice = function () {
-    $scope.scrollRight(); // Gọi hàm scrollRight() để thực hiện cuộn sang phải
-    if ($scope.invoices.length >= 5) {
-      return alert("Đã đạt giới hạn, không tạo hóa đơn mới"); // Đã đạt giới hạn, không tạo hóa đơn mới
+  // validate khách thanh toán
+  $scope.isNumberKey = function (event) {
+    var charCode = event.which ? event.which : event.keyCode;
+    if (
+      charCode > 31 &&
+      (charCode < 48 || charCode > 57) &&
+      charCode !== 44 &&
+      charCode !== 46
+    ) {
+      event.preventDefault();
     }
-
-    var invoiceCount = $scope.invoices.length + 1;
-    var newInvoice = "Hóa đơn " + invoiceCount;
-    $scope.invoices.push(newInvoice);
   };
 
-  /////////////////////////////////////////////////////////////
+  // tính số lượng và tổng tiền
+  $scope.cartItems = [
+    {
+      code: "Code2644",
+      name: "Ut voluptatem id earum et",
+      quantity: 1,
+      price: 500.0,
+    },
+    // Thêm các hàng khác vào đây
+  ];
+
+  $scope.getTotalQuantity = function () {
+    var totalQuantity = 0;
+    for (var i = 0; i < $scope.cartItems.length; i++) {
+      totalQuantity += $scope.cartItems[i].quantity;
+    }
+    return totalQuantity;
+  };
+
+  $scope.increment = function (item) {
+    item.quantity++;
+    $scope.calculateAccumulatedPrice(); // Gọi hàm calculateAccumulatedPrice() để tính toán tổng
+    $scope.khachThanhToan = $scope.khachCanTra(); // Gọi hàm để tính khách thanh toán
+  };
+
+  $scope.decrement = function (item) {
+    if (item.quantity > 1) {
+      item.quantity--;
+      $scope.calculateAccumulatedPrice(); // Gọi hàm calculateAccumulatedPrice() để tính toán tổng
+      $scope.khachThanhToan = $scope.khachCanTra(); // Gọi hàm để tính khách thanh toán
+    }
+  };
+
+  // Trong AngularJS controller hoặc component
+  $scope.accumulatedPrice = 0;
+
+  $scope.calculateAccumulatedPrice = function () {
+    $scope.accumulatedPrice = 0;
+    for (var i = 0; i < $scope.cartItems.length; i++) {
+      var item = $scope.cartItems[i];
+      $scope.accumulatedPrice += item.price * item.quantity;
+    }
+  };
+
+  // Gọi hàm calculateAccumulatedPrice() để tính toán tổng giá trị ban đầu
+  $scope.calculateAccumulatedPrice();
+
+  // Trong AngularJS controller hoặc component
+  $scope.khachCanTra = function () {
+    return $scope.accumulatedPrice;
+  };
+
+  $scope.khachThanhToan = $scope.khachCanTra(); // Gán giá trị khách cần trả cho khách thanh toán ban đầu
+
+  $scope.tinhTienThua = function () {
+    return $scope.khachThanhToan - $scope.accumulatedPrice;
+  };
 
   
-  $scope.deleteInvoice = function(invoice) {
-    $scope.invoices = $scope.invoices.filter(function(item) {
-      return item !== invoice;
-    });
-  };
-  
+
+
+
+
+
 });
