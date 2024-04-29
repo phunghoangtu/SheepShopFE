@@ -1,7 +1,5 @@
-var app = angular.module("myApp", ["ngRoute"]);
-
-app.controller("SellController", function ($scope, $http) {
-
+window.SellController = function($scope, $http){
+  
   $scope.showProducts = false;
   $scope.products = [
     { code: "P001", name: "Sản phẩm 1", price: "90$", quantity: "100" },
@@ -153,4 +151,7 @@ app.controller("SellController", function ($scope, $http) {
       alert("Xóa thành công");
     });
   };
-});
+
+}
+
+  

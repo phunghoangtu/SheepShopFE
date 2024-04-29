@@ -13,7 +13,7 @@
   scroll-behavior: smooth;
 }
 
-/* * {
+* {
   box-sizing: inherit;
 }
 
@@ -21,7 +21,8 @@ html {
   font-size: 62.5%;
   line-height: 1.6rem;
   box-sizing: border-box;
-} */
+  overflow: hidden;
+}
 
 body {
   font-family: "Open Sans", sans-serif;
@@ -228,7 +229,7 @@ h6 {
 
 /* Card */
 .card {
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   border: none;
   border-radius: 5px;
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
@@ -243,7 +244,7 @@ h6 {
 }
 
 .card-title {
-  padding: 20px 0 15px 0;
+  padding: 20px 0 0 0;
   font-size: 18px;
   font-weight: 500;
   color: #012970;
@@ -1214,4 +1215,53 @@ h6 {
   color: #0070f4;
   margin: 0 auto;
   display: flex;
+}
+
+/* /////////////////////////////////////////////// */
+
+.table-quantity::-webkit-inner-spin-button,
+.table-quantity::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.table-quantity {
+    -moz-appearance: textfield;
+    border-width: 0 0 1px;
+    width: 20%;
+}
+
+.table-quantity:hover,
+.table-quantity:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+#khachthanhtoan::-webkit-inner-spin-button,
+#khachthanhtoan::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#khachthanhtoan {
+    -moz-appearance: textfield;
+    border-width: 0 0 1px;
+    width: 100%;
+    direction: rtl;
+}
+
+#khachthanhtoan:hover,
+#khachthanhtoan:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+
+hr {
+  padding-bottom: 10px;
+}
+
+
+.card-body-ttbh {
+   height: 465px;
 }

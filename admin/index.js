@@ -11,6 +11,10 @@ app.config(function ($routeProvider, $locationProvider) {
       templateUrl: "product/index.html",
       controller: "ProductController",
     })
+    .when("/sell", {
+      templateUrl: "sell/sell.html",
+      controller: SellController,
+    })
     .when("/login", {
       templateUrl: "account/login.html",
       controller: LoginAdminController,
