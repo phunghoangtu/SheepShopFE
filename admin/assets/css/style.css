@@ -617,7 +617,8 @@ h6 {
   margin: 10px 0 5px 15px;
 }
 
-.sidebar-nav .nav-link,.nav-link-right {
+.sidebar-nav .nav-link,
+.nav-link-right {
   display: flex;
   align-items: center;
   font-size: 15px;
@@ -629,23 +630,25 @@ h6 {
   border-radius: 4px;
 }
 
-.sidebar-nav .nav-link i,.nav-link-right i {
+.sidebar-nav .nav-link i,
+.nav-link-right i {
   font-size: 16px;
   margin-right: 10px;
   color: #4154f1;
 }
 
-.sidebar-nav .nav-link.collapsed  {
+.sidebar-nav .nav-link.collapsed {
   color: #fff;
   background: #0070f4;
 }
 
-.sidebar-nav .nav-link-right.collapsed {  
+.sidebar-nav .nav-link-right.collapsed {
   color: #fff;
   background: #005ac3;
 }
 
-.sidebar-nav .nav-link.collapsed i,.nav-link-right.collapsed i {
+.sidebar-nav .nav-link.collapsed i,
+.nav-link-right.collapsed i {
   color: #fff;
 }
 
@@ -693,7 +696,7 @@ h6 {
   margin-right: 8px;
   line-height: 0;
   border-radius: 50%;
-  
+
 }
 
 .sidebar-nav .nav-content a:hover,
@@ -704,23 +707,31 @@ h6 {
 
 .sidebar-nav .nav-content a.active i {
   background-color: #4154f1;
-  
+
 }
 
 /* CSS cho hover */
 
 .nav-item:hover a {
-  color: #fff; /* Màu chữ khi hover */
+  color: #000;
+  /* Màu chữ khi hover */
+}
+
+.nav-item-a:hover a {
+  color: #fff;
+  /* Màu chữ khi hover */
 }
 
 /* CSS cho hiển thị danh sách sản phẩm */
 .nav-content {
-  display: none; /* Ẩn danh sách sản phẩm mặc định */
+  display: none;
+  /* Ẩn danh sách sản phẩm mặc định */
 }
 
 .nav-item:hover .nav-content {
   background-color: #005ac3;
-  display: block; /* Hiển thị danh sách sản phẩm khi hover */
+  display: block;
+  /* Hiển thị danh sách sản phẩm khi hover */
   color: #fff;
 }
 
