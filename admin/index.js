@@ -23,6 +23,7 @@ app.config(function ($routeProvider, $locationProvider) {
     });
 });
 
+
 app.factory("AuthInterceptor", function ($location, AuthService) {
   return {
     request: function (config) {

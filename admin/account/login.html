@@ -16,9 +16,9 @@
     href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
     rel="stylesheet">
 
-<style>
-  
-</style>
+  <style>
+
+  </style>
 
 </head>
 
@@ -48,30 +48,33 @@
                   </div>
 
                   <div class="row g-3 needs-validation">
+                    <div class="input-group has-validation">
+                      <div class="col-12">
+                        <label for="username" class="form-label">Username</label>
 
-                    <div class="col-12">
-                      <label for="username" class="form-label">Username</label>
-                      <div class="input-group has-validation">
                         <input type="text" ng-model="username" class="form-control">
                         <div ng-repeat="err in validationErrors">
-                          <span class="validate" ng-if="err.objectName == 'loginRequest' && err.field == 'username'">
+                          <span class="validate" ng-if="err.objectName == 'loginRequest' && err.field == 'username'"
+                            style="color: red;">
                             {{err.defaultMessage}}
                           </span>
                         </div>
-                      </div>
-                    </div>
 
-                    <div class="col-12">
-                      <label for="password" class="form-label">Password</label>
-                      <input type="password" ng-model="password" class="form-control">
-                      <div ng-repeat="err in validationErrors">
-                        <span class="validate" ng-if="err.objectName == 'loginRequest' && err.field == 'password'">
-                          {{err.defaultMessage}}
-                        </span>
                       </div>
 
-                    </div>
+                      <div class="col-12">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" ng-model="password" class="form-control"><br>
+                        <div ng-repeat="err in validationErrors">
+                          <span class="validate" ng-if="err.objectName == 'loginRequest' && err.field == 'password'"
+                            style="color: red;">
+                            {{err.defaultMessage}}
+                          </span>
+                        </div>
 
+                      </div>
+                    </div>
+                    
                     <div class="col-6">
                       <button ng-click="login()" class="btn btn-outline-primary w-100">Quản lý</button>
                     </div>
