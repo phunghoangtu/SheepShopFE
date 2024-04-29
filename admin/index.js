@@ -3,17 +3,23 @@ var app = angular.module("myApp", ["ngRoute"]);
 app.config(function ($routeProvider, $locationProvider) {
   $locationProvider.hashPrefix("");
   $routeProvider
+    .when("/chart/view", {
+      templateUrl: "chart/index.html",
+      controller: "ThongKeController",
+    })
     .when("/product/view", {
-      templateUrl: "products/index.html",
+      templateUrl: "product/index.html",
       controller: "ProductController",
     })
     .when("/login", {
       templateUrl: "account/login.html",
       controller: LoginAdminController,
     })
-
     .when("/403", {
       templateUrl: "403.html",
+    })
+    .otherwise({
+      redirectTo: "/chart/view",
     });
 });
 
@@ -33,7 +39,7 @@ app.factory("AuthInterceptor", function ($location, AuthService) {
         (token !== null && $location.path() === "/login") ||
         (token !== null && $location.path() === "/forget")
       ) {
-        $location.path("/product/view");
+        $location.path("/chart/view");
       }
 
       if (

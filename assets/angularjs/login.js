@@ -34,7 +34,7 @@ window.LoginAdminController = function($scope, $http, $location,$rootScope,AuthS
             document.getElementById('login').style.display = 'none';
             Swal.fire("Đăng nhập thành công !","","success");
             
-            location.href= '#/product/view'
+            location.href= '#/chart/view'
             
             }
         })
