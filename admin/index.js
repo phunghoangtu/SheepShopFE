@@ -19,6 +19,10 @@ app.config(function ($routeProvider, $locationProvider) {
       templateUrl: "account/login.html",
       controller: LoginAdminController,
     })
+    .when("/profile", {
+      templateUrl: "account/profile.html",
+      controller: 'ProfileController',
+    })
     .when("/403", {
       templateUrl: "403.html",
     })

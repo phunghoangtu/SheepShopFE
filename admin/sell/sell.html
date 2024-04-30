@@ -12,29 +12,43 @@
 
                         <div class="card ">
 
+                            <div class="card-body" style="padding: 10px; background-color: aqua;">
+                                <button ng-click="addBill()" class="btn btn-primary">Tạo hóa đơn</button>
+                                <button ng-click="addBill()" class="btn btn-primary">Thanh toán</button>
+                            </div>
+
                             <div class="card-body tableproduct" style="height: 135px;">
 
-                                <table class="table">
-                                    <tbody>
-                                        <tr ng-repeat="bill in bills">
-                                            <th scope="row">{{ bill.code }}</th>
-                                            <td>{{ bill.user.username }}</td>
-                                            <td>{{ bill.customer.fullname }}</td>
-                                            <td>
-                                                <a href="" ng-click="deleteBillId(bill.id)"><i
-                                                        class="bi bi-trash"></i></a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div style="margin-top: 10px;">
+                                    <h5>Có {{listBill.length}} đơn hàng đang chờ</h5>
+                                    <span ng-repeat="bill in pager.items">
+                                      <button ng-click="choose(bill.code,bill.id)" style="margin: 2px;height: 50px;"
+                                        class="btn btn-info">#{{bill.code}}</button>
+                                    </span>
+                                
+                                
+                                    <div ng-if="listBill.length > 0">
+                                      <div class="btn-group" aria-label="Basic outlined example">
+                                        <button ng-click="pager.first()" type="button" class="btn btn-dark"><i
+                                            class="fa-solid fa-angles-left"></i></button>
+                                        <button ng-click="pager.prev()" type="button" class="btn btn-dark"><i
+                                            class="fa-solid fa-angle-left"></i></button>
+                                        <button type="button" class="btn btn-dark">{{pager.page+1}}
+                                          of
+                                          {{pager.count}}</button>
+                                        <button ng-click="pager.next()" type="button" class="btn btn-dark"><i
+                                            class="fa-solid fa-angle-right"></i></button>
+                                        <button ng-click="pager.last()" type="button" class="btn btn-dark"><i
+                                            class="fa-solid fa-angles-right"></i></button>
+                                      </div>
+                                
+                                    </div>
+                                
+                                  </div>
 
+                               
                             </div>
-                            <div class="card-body" style="padding: 10px;">
-                                <a href="#" ng-click="addBill()" class="btn btn-primary">
-                                    Tạo hóa đơn
-                                </a>
-                                <button class="btn btn-primary">Thanh toán</button>
-                            </div>
+
 
                         </div>
 
@@ -111,13 +125,14 @@
                         <div class="card">
 
                             <div class="card-body card-body-ttbh">
-                                <h5 class="card-title">{{user.fullname}}<span> | {{ currentDate | date:'dd/MM/yyyy' }} {{
+                                <h5 class="card-title">{{user.fullname}}<span> | {{ currentDate | date:'dd/MM/yyyy' }}
+                                        {{
                                         currentTime |
                                         date:'HH:mm' }}</span></h5>
 
                                 <hr>
 
-                                <form action="" class="row g-3">                  
+                                <form action="" class="row g-3">
                                     <div class="row">
                                         <div class="col-md-5">
                                             <label for="" class="form-label">Tổng tiền hàng</label>

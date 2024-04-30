@@ -1,5 +1,4 @@
-window.SellController = function($scope, $http){
-  
+window.SellController = function ($scope, $http) {
   $scope.showProducts = false;
   $scope.products = [
     { code: "P001", name: "Sản phẩm 1", price: "90$", quantity: "100" },
@@ -119,39 +118,71 @@ window.SellController = function($scope, $http){
 
   //   crud bill
 
-  const url = "http://localhost:8080/api/bill/paystatus";
+  const url = "http://localhost:8080/api/bill/billTaiQuay";
 
-  $scope.setBill = function (bill) {
-    $scope.bill = bill;
-  };
+  $scope.getAllBill = function () {
+    $scope.listBill = [];
+    $http
+      .get(url + "/getbystatus/10")
+      .then(function (resp) {
+        $scope.listBill = resp.data;
+      });
 
-  var getAllBillChuaThanhToan = function () {
-    $http.get(url).then(function (response) {
-      $scope.bills = response.data;
-    });
+    // pagation
+    $scope.pager = {
+      page: 0,
+      size: 7,
+      get items() {
+        var start = this.page * this.size;
+        return $scope.listBill.slice(start, start + this.size);
+      },
+      get count() {
+        return Math.ceil((1.0 * $scope.listBill.length) / this.size);
+      },
+
+      first() {
+        this.page = 0;
+      },
+      prev() {
+        this.page--;
+        if (this.page < 0) {
+          this.last();
+        }
+      },
+      next() {
+        this.page++;
+        if (this.page >= this.count) {
+          this.first();
+        }
+      },
+      last() {
+        this.page = this.count - 1;
+      },
+    };
   };
-  getAllBillChuaThanhToan();
+  $scope.getAllBill();
 
   // Create
   $scope.addBill = function () {
-    var bill = {
-      user: $scope.user.id, // Lấy ID người dùng từ thông tin người dùng hiện tại
-      customer: $scope.customer.id,
-    };
-    $http.post(url, bill).then(function (response) {
-      alert("Tạo hóa đơn thành công");
-    });
+    // add bill
+    $http
+      .post( url +"/add", {
+        employee: AuthService.getId(),
+        typeStatus: 1,
+        status: 10,
+        
+      })
+      .then(function (bill) {
+        Swal.fire(
+          "Tạo hóa đơn " + bill.data.code + " thành công !",
+          "",
+          "success"
+        );
+        $scope.getAllBill();
+      });
   };
-  $scope.bill = {};
 
-  // Delete
-  $scope.deleteBillId = function (id) {
-    $http.delete(url + "/" + id).then(function (response) {
-      getAllBillChuaThanhToan();
-      alert("Xóa thành công");
-    });
-  };
-
-}
 
   
+ 
+};
