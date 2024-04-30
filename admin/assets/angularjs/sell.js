@@ -1,4 +1,170 @@
-window.SellController = function ($scope, $http) {
+window.SellController = function (
+  $scope,
+  $http,
+  $location,
+  $routeParams,
+  $rootScope,
+  AuthService
+) {
+  //tạo hóa đơn
+  $scope.addBill = function () {
+    // add bill
+    $http
+      .post("http://localhost:8080/api/bill/billTaiQuay", {
+        status: 10,
+        idEmployee: AuthService.getId(),
+        typeStatus: 1,
+      })
+      .then(function (bill) {
+        Swal.fire(
+          "Tạo hóa đơn " + bill.data.code + " thành công !",
+          "",
+          "success"
+        );
+        $http.post("http://localhost:8080/api/billhistory", {
+          createBy: $rootScope.user.username,
+          note: "Tạo hóa đơn tại quầy",
+          status: 0,
+          idBill: bill.data.id,
+        });
+        $scope.getAllBill();
+      });
+  };
+
+  //hiển thị hóa đơn chờ
+  $scope.getAllBill = function () {
+    $scope.listBill = [];
+    $http
+      .get("http://localhost:8080/api/bill/getbystatus/10")
+      .then(function (resp) {
+        $scope.listBill = resp.data;
+      });
+
+    // pagation
+    $scope.pager = {
+      page: 0,
+      size: 7,
+      get items() {
+        var start = this.page * this.size;
+        return $scope.listBill.slice(start, start + this.size);
+      },
+      get count() {
+        return Math.ceil((1.0 * $scope.listBill.length) / this.size);
+      },
+
+      first() {
+        this.page = 0;
+      },
+      prev() {
+        this.page--;
+        if (this.page < 0) {
+          this.last();
+        }
+      },
+      next() {
+        this.page++;
+        if (this.page >= this.count) {
+          this.first();
+        }
+      },
+      last() {
+        this.page = this.count - 1;
+      },
+    };
+  };
+  $scope.getAllBill();
+
+  ////////////////////////////////
+
+  // $scope.magiamgia = function () {
+  //   if (document.getElementById("chuongtrinhkhuyenmaiCheck").checked == true) {
+  //     document.getElementById("magiamgia").style.display = "none";
+  //     document.getElementById("chuongtrinhkhuyenmai").style.display = "block";
+  //   } else {
+  //     document.getElementById("magiamgia").style.display = "block";
+  //     document.getElementById("chuongtrinhkhuyenmai").style.display = "none";
+  //   }
+  // };
+  // $scope.magiamgia();
+
+  $scope.phiShip = 0;
+  $scope.tienThanhToan = 0;
+  $scope.giamGia = 0;
+
+  let idBill = null;
+  let codeBill = null;
+
+  $scope.choose = function (code, id) {
+
+
+
+    idBill = id;
+    codeBill = code;
+    $scope.hoadon = {};
+
+    //get
+    $http
+      .get("http://localhost:8080/api/bill/getallbybill/" + codeBill)
+      .then(function (resp) {
+        $scope.listItem = resp.data;
+        $scope.tongTien = 0.0;
+        let TotalGam = 0;
+        for (let i = 0; i < $scope.listItem.length; i++) {
+          $scope.tongTien +=
+            parseFloat($scope.listItem[i].unitPrice) *
+            parseFloat($scope.listItem[i].quantity);
+        }
+        for (let i = 0; i < $scope.listItem.length; i++) {
+          TotalGam +=
+            $scope.listItem[i].productDetail.weight *
+            $scope.listItem[i].quantity;
+        }
+        $scope.tienThanhToan =
+          $scope.tongTien + $scope.phiShip - $scope.giamGia;
+      });
+
+    $scope.listItem = [];
+    idBill = id;
+    $scope.hoadon = {};
+    $http
+      .get("http://localhost:8080/api/bill/getbycode/" + code)
+      .then(function (resp) {
+        $scope.hoadon = resp.data;
+        $scope.nhanVien = {};
+        $http
+          .get("http://localhost:8080/api/employee/" + resp.data.idEmployee)
+          .then(function (resp) {
+            $scope.nhanVien = resp.data;
+          });
+      });
+
+    $http
+      .get("http://localhost:8080/api/bill/getallbybill/" + code)
+      .then(function (resp) {
+        $scope.listItem = resp.data;
+        $scope.tongTien = 0.0;
+        for (let i = 0; i < $scope.listItem.length; i++) {
+          $scope.tongTien +=
+            parseFloat($scope.listItem[i].unitPrice) *
+            parseFloat($scope.listItem[i].quantity);
+        }
+      });
+
+    $scope.getTotalQuantity = function () {
+      var totalQuantity = 0;
+      for (var i = 0; i < $scope.listItem.length; i++) {
+        totalQuantity += $scope.listItem[i].quantity;
+      }
+      return totalQuantity;
+    };
+
+    $scope.getTotalPrice = function () {
+      $scope.tienThanhToan;
+    };
+
+    ///////////////////////////////////////////////////
+  };
+
   $scope.showProducts = false;
   $scope.products = [
     { code: "P001", name: "Sản phẩm 1", price: "90$", quantity: "100" },
@@ -40,8 +206,6 @@ window.SellController = function ($scope, $http) {
 
   //////////////////////////////////////////////////////
 
-  // Khai báo và gán giá trị cho currentDate và currentTime
-
   $scope.currentDate = new Date();
   $scope.currentTime = new Date();
 
@@ -58,54 +222,6 @@ window.SellController = function ($scope, $http) {
     }
   };
 
-  // tính số lượng và tổng tiền
-  $scope.cartItems = [
-    {
-      code: "Code2644",
-      name: "Ut voluptatem id earum et",
-      quantity: 1,
-      price: 500.0,
-    },
-    // Thêm các hàng khác vào đây
-  ];
-
-  $scope.getTotalQuantity = function () {
-    var totalQuantity = 0;
-    for (var i = 0; i < $scope.cartItems.length; i++) {
-      totalQuantity += $scope.cartItems[i].quantity;
-    }
-    return totalQuantity;
-  };
-
-  $scope.increment = function (item) {
-    item.quantity++;
-    $scope.calculateAccumulatedPrice(); // Gọi hàm calculateAccumulatedPrice() để tính toán tổng
-    $scope.khachThanhToan = $scope.khachCanTra(); // Gọi hàm để tính khách thanh toán
-  };
-
-  $scope.decrement = function (item) {
-    if (item.quantity > 1) {
-      item.quantity--;
-      $scope.calculateAccumulatedPrice(); // Gọi hàm calculateAccumulatedPrice() để tính toán tổng
-      $scope.khachThanhToan = $scope.khachCanTra(); // Gọi hàm để tính khách thanh toán
-    }
-  };
-
-  // Trong AngularJS controller hoặc component
-  $scope.accumulatedPrice = 0;
-
-  $scope.calculateAccumulatedPrice = function () {
-    $scope.accumulatedPrice = 0;
-    for (var i = 0; i < $scope.cartItems.length; i++) {
-      var item = $scope.cartItems[i];
-      $scope.accumulatedPrice += item.price * item.quantity;
-    }
-  };
-
-  // Gọi hàm calculateAccumulatedPrice() để tính toán tổng giá trị ban đầu
-  $scope.calculateAccumulatedPrice();
-
-  // Trong AngularJS controller hoặc component
   $scope.khachCanTra = function () {
     return $scope.accumulatedPrice;
   };
@@ -115,74 +231,4 @@ window.SellController = function ($scope, $http) {
   $scope.tinhTienThua = function () {
     return $scope.khachThanhToan - $scope.accumulatedPrice;
   };
-
-  //   crud bill
-
-  const url = "http://localhost:8080/api/bill/billTaiQuay";
-
-  $scope.getAllBill = function () {
-    $scope.listBill = [];
-    $http
-      .get(url + "/getbystatus/10")
-      .then(function (resp) {
-        $scope.listBill = resp.data;
-      });
-
-    // pagation
-    $scope.pager = {
-      page: 0,
-      size: 7,
-      get items() {
-        var start = this.page * this.size;
-        return $scope.listBill.slice(start, start + this.size);
-      },
-      get count() {
-        return Math.ceil((1.0 * $scope.listBill.length) / this.size);
-      },
-
-      first() {
-        this.page = 0;
-      },
-      prev() {
-        this.page--;
-        if (this.page < 0) {
-          this.last();
-        }
-      },
-      next() {
-        this.page++;
-        if (this.page >= this.count) {
-          this.first();
-        }
-      },
-      last() {
-        this.page = this.count - 1;
-      },
-    };
-  };
-  $scope.getAllBill();
-
-  // Create
-  $scope.addBill = function () {
-    // add bill
-    $http
-      .post( url +"/add", {
-        employee: AuthService.getId(),
-        typeStatus: 1,
-        status: 10,
-        
-      })
-      .then(function (bill) {
-        Swal.fire(
-          "Tạo hóa đơn " + bill.data.code + " thành công !",
-          "",
-          "success"
-        );
-        $scope.getAllBill();
-      });
-  };
-
-
-  
- 
 };

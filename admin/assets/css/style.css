@@ -395,6 +395,80 @@ h6 {
   padding-left: 25px;
 }
 
+.search-bar {
+  min-width: 350px;
+  padding: 5px;
+}
+
+.search-form {
+  width: 40%;
+}
+
+.search-form input {
+  border: 0;
+  font-size: 10px;
+  color: #012970;
+  border: 1px solid rgba(1, 41, 112, 0.2);
+  padding: 5px 32px;
+  border-radius: 5px;
+  transition: 0.3s;
+  width: 100%;
+  display: flex;
+}
+
+.search-form input:focus,
+.search-form input:hover {
+  outline: none;
+  box-shadow: 0 0 10px 0 rgba(1, 41, 112, 0.15);
+  border: 1px solid rgba(1, 41, 112, 0.3);
+}
+
+.product-list {
+  position: absolute;
+  top: 40px;
+  left: 25px;
+  width: 310px;
+  
+}
+
+.table-wrapper {
+    overflow: auto;
+    height: 250px;
+}
+
+.tableproduct {
+    overflow: hidden;
+    /* Ẩn thanh cuộn ngang */
+    white-space: nowrap;
+    /* Ngăn các dòng trong bảng xuống hàng */
+    height: 315px;
+    /* Chiều cao của phần tử */
+}
+
+.tableproduct::-webkit-scrollbar {
+    width: 8px;
+    /* Độ rộng của thanh cuộn */
+    background-color: #F5F5F5;
+    /* Màu nền của thanh cuộn */
+}
+
+.tableproduct::-webkit-scrollbar-thumb {
+    background-color: #999;
+    /* Màu của thanh cuộn */
+}
+
+.tableproduct::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+    /* Màu của thanh cuộn khi di chuột qua */
+}
+
+.tableproduct {
+    overflow-y: auto;
+    /* Hiển thị thanh cuộn dọc khi cần thiết */
+}
+
+
+
 /*--------------------------------------------------------------
 # Header Nav
 --------------------------------------------------------------*/
