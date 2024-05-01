@@ -5,7 +5,7 @@ app.config(function ($routeProvider, $locationProvider) {
   $routeProvider
     .when("/chart/view", {
       templateUrl: "chart/index.html",
-      controller: "ThongKeController",
+      controller: ThongKeController,
     })
     .when("/product/view", {
       templateUrl: "product/index.html",
@@ -15,13 +15,13 @@ app.config(function ($routeProvider, $locationProvider) {
       templateUrl: "sell/sell.html",
       controller: SellController,
     })
+    .when("/profile", {
+      templateUrl: "account/profile.html",
+      controller: ProfileController,
+    })
     .when("/login", {
       templateUrl: "account/login.html",
       controller: LoginAdminController,
-    })
-    .when("/profile", {
-      templateUrl: "account/profile.html",
-      controller: 'ProfileController',
     })
     .when("/403", {
       templateUrl: "403.html",
@@ -32,31 +32,31 @@ app.config(function ($routeProvider, $locationProvider) {
 });
 
 
-// app.directive('ckEditor', function() {
-//   return {
-//       require: '?ngModel',
-//       link: function(scope, element, attrs, ngModel) {
-//           var editor = CKEDITOR.replace(element[0], {
-//               extraPlugins: 'image',
-//               filebrowserImageUploadUrl: 'https://api.cloudinary.com/v1_1/dmatlhayn/image/upload?upload_preset=ml_default', // Thay YOUR_CLOUD_NAME và YOUR_UPLOAD_PRESET bằng thông tin của bạn
-//               cloudinary_api_key: '886659291316774', // Thay YOUR_API_KEY bằng API key của bạn
-//           });
+app.directive('ckEditor', function() {
+  return {
+      require: '?ngModel',
+      link: function(scope, element, attrs, ngModel) {
+          var editor = CKEDITOR.replace(element[0], {
+              extraPlugins: 'image',
+              filebrowserImageUploadUrl: 'https://api.cloudinary.com/v1_1/dmatlhayn/image/upload?upload_preset=ml_default', // Thay YOUR_CLOUD_NAME và YOUR_UPLOAD_PRESET bằng thông tin của bạn
+              cloudinary_api_key: '604239616556', // Thay YOUR_API_KEY bằng API key của bạn
+          });
 
-//           if (!ngModel) return;
+          if (!ngModel) return;
 
-//           editor.on('change', function() {
-//               scope.$apply(function() {
-//                   ngModel.$setViewValue(editor.getData());
-//               });
-//           });
+          editor.on('change', function() {
+              scope.$apply(function() {
+                  ngModel.$setViewValue(editor.getData());
+              });
+          });
           
 
-//           ngModel.$render = function() {
-//               editor.setData(ngModel.$viewValue);
-//           };
-//       }
-//   };
-// });
+          ngModel.$render = function() {
+              editor.setData(ngModel.$viewValue);
+          };
+      }
+  };
+});
 
 
 app.factory('AuthInterceptor', function ($location,AuthService) {

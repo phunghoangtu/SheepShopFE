@@ -166,16 +166,8 @@ window.SellController = function (
     $scope.getTotalPrice = function () {
       $scope.tienThanhToan;
     };
-
   };
- ///////////////////////////////////////////////////
-
-
-  
-
-
-
-  
+  ///////////////////////////////////////////////////
 
   $scope.showProducts = false;
   $scope.products = [
@@ -219,7 +211,6 @@ window.SellController = function (
   //////////////////////////////////////////////////////
 
   $scope.currentDate = new Date();
-  $scope.currentTime = new Date();
 
   // validate khách thanh toán
   $scope.isNumberKey = function (event) {

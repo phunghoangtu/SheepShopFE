@@ -13,22 +13,24 @@
                         <div class="card ">
 
                             <div class="card-body" style="padding: 5px;">
-                                <div class="row" style="margin-left: 10px;">
+                                <div class="row" style="margin-left: 5px;">
                                     <div class="col-lg-3">
-                                        <button ng-click="addBill()" class="btn btn-primary" style="height: 30px; width: 100px;">Tạo hóa đơn</button>                                  
+                                        <button ng-click="addBill()" class="btn btn-primary" style="width: 120px;">Tạo
+                                            hóa đơn</button>
                                     </div>
-                                    <div class="col-lg-9">
+                                    <div class="col-lg-6">
                                         <h5>Có {{listBill.length}} đơn hàng đang chờ</h5>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="card-body" style="height: 70px;">
+                            <div class="card-body" style="height: 90px;">
 
                                 <div>
-                                    
+
                                     <span ng-repeat="bill in pager.items">
-                                        <button ng-click="choose(bill.code,bill.id)" style="margin: 3px 1px;height: 30px; width: 100px;"
+                                        <button ng-click="choose(bill.code,bill.id)"
+                                            style="margin: 2px 1px; width: 80px;"
                                             class="btn btn-dark">{{bill.code}}</button>
                                     </span>
 
@@ -73,14 +75,15 @@
                                             </form>
                                         </div><!-- End Search Bar -->
                                     </div>
-                                    
+
                                     <div class="col-lg-12">
                                         <div class="search-bar">
-                                            <button ng-click="webcam()" class="btn btn-dark"><i class="fa-solid fa-qrcode"></i>
+                                            <button ng-click="webcam()" class="btn btn-dark"><i
+                                                    class="fa-solid fa-qrcode"></i>
                                                 Scan QR
-                                            </button>         
+                                            </button>
                                         </div><!-- End Search Bar -->
-                                        
+
                                     </div>
                                 </div>
 
@@ -116,9 +119,10 @@
                                             <td>{{ cart.productDetail.product.name }}</td>
                                             <td>
                                                 <i class="bi bi-dash-circle" ng-click="giam(cart.id)"></i>
-                                                <input id="quantity{{cart.id}}" type="number"  min="1"  value="{{cart.quantity}}" class="table-quantity text-center">
+                                                <input id="quantity{{cart.id}}" type="number" min="1"
+                                                    value="{{cart.quantity}}" class="table-quantity text-center">
                                                 <i class="bi bi-plus-circle" ng-click="tang(cart.id)"></i>
-                                            </td>                
+                                            </td>
                                             <td>{{cart.productDetail.price | currency:'':0}} VNĐ</td>
                                             <td>{{cart.productDetail.price * cart.quantity | currency:'':0}} VNĐ</td>
                                             <td>
@@ -127,12 +131,13 @@
                                         </tr>
                                         <tr ng-if="listItem.length == 0">
                                             <td colspan="13">
-                                              <div style="text-align: center;">
-                                                <div><img style="width: 80px; height: 80px;" src="././assets/img/box.png"></div>
-                                                <h4>Không có sản phẩm nào</h4>
-                                              </div>
+                                                <div style="text-align: center;">
+                                                    <div><img style="width: 80px; height: 80px;"
+                                                            src="././assets/img/box.png"></div>
+                                                    <h4>Không có sản phẩm nào</h4>
+                                                </div>
                                             </td>
-                                          </tr>
+                                        </tr>
                                     </tbody>
                                 </table>
 
@@ -156,11 +161,11 @@
                         <div class="card">
 
                             <div class="card-body" style="height: 440px;">
-                                <h5 class="card-title">{{user.fullname}}<span> | {{ currentDate | date:'dd/MM/yyyy' }}
-                                        {{
-                                        currentTime |
-                                        date:'HH:mm' }}</span></h5>
-                                        <h5>Đơn hàng: {{hoadonCode.code}}</h5>
+                                <div class="row">
+                                    <h5 class="card-title" style="padding-top: 5px;">Nhân viên bán hàng: {{user.fullname}}<span> | {{ currentDate | date:'dd/MM/yyyy'  }}</span></h5>
+                                    <h5 class="card-title">Đơn hàng: {{hoadonCode.code}}</h5>
+                                </div>
+
                                 <hr>
 
                                 <div class="row g-3">

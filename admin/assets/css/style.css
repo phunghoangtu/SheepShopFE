@@ -13,16 +13,7 @@
   scroll-behavior: smooth;
 }
 
-* {
-  box-sizing: inherit;
-}
 
-html {
-  font-size: 62.5%;
-  line-height: 1.6rem;
-  box-sizing: border-box;
-  overflow: hidden;
-}
 
 body {
   font-family: "Open Sans", sans-serif;
@@ -244,11 +235,11 @@ h6 {
 }
 
 .card-title {
-  padding: 20px 0 15px 0;
   font-size: 18px;
   font-weight: 500;
   color: #012970;
   font-family: "Poppins", sans-serif;
+  padding-left: 16px;
 }
 
 .card-title span {
@@ -1332,5 +1323,7 @@ h6 {
 
 
 hr {
-  padding-bottom: 10px;
+
+  margin-top: 1px;
+
 }
