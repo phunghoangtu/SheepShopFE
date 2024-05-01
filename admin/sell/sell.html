@@ -5,61 +5,8 @@
         <div class="row">
 
             <!-- Left side columns -->
-            <div class="col-lg-7">
+            <div class="col-lg-8">
                 <div class="row">
-
-                    <div class="col-lg-12">
-
-                        <div class="card ">
-
-                            <div class="card-body" style="padding: 5px;">
-                                <div class="row" style="margin-left: 5px;">
-                                    <div class="col-lg-3">
-                                        <button ng-click="addBill()" class="btn btn-primary" style="width: 120px;">Tạo
-                                            hóa đơn</button>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <h5>Có {{listBill.length}} đơn hàng đang chờ</h5>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card-body" style="height: 90px;">
-
-                                <div>
-
-                                    <span ng-repeat="bill in pager.items">
-                                        <button ng-click="choose(bill.code,bill.id)"
-                                            style="margin: 2px 1px; width: 80px;"
-                                            class="btn btn-dark">{{bill.code}}</button>
-                                    </span>
-
-                                    <div ng-if="listBill.length > 0">
-                                        <div class="btn-group" aria-label="Basic outlined example">
-                                            <button ng-click="pager.first()" type="button" class="btn btn-dark"><i
-                                                    class="fa-solid fa-angles-left"></i></button>
-                                            <button ng-click="pager.prev()" type="button" class="btn btn-dark"><i
-                                                    class="fa-solid fa-angle-left"></i></button>
-                                            <button type="button" class="btn btn-dark">{{pager.page+1}}
-                                                of
-                                                {{pager.count}}</button>
-                                            <button ng-click="pager.next()" type="button" class="btn btn-dark"><i
-                                                    class="fa-solid fa-angle-right"></i></button>
-                                            <button ng-click="pager.last()" type="button" class="btn btn-dark"><i
-                                                    class="fa-solid fa-angles-right"></i></button>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <!-- End Right side columns -->
-
-                    </div>
 
                     <div class="col-lg-12">
 
@@ -68,37 +15,59 @@
 
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="search-bar">
-                                            <form class="search-form d-flex align-items-center">
-                                                <input type="text" ng-model="query" ng-change="search()"
-                                                    placeholder="Tìm hàng hóa" title="Tìm sản phẩm theo tên">
-                                            </form>
-                                        </div><!-- End Search Bar -->
-                                    </div>
+                                        <div class="row">
 
-                                    <div class="col-lg-12">
-                                        <div class="search-bar">
-                                            <button ng-click="webcam()" class="btn btn-dark"><i
-                                                    class="fa-solid fa-qrcode"></i>
-                                                Scan QR
-                                            </button>
-                                        </div><!-- End Search Bar -->
+                                            <div class="col-lg-5">
+                                                <div class="search-bar">
+                                                    <form class="search-form d-flex align-items-center">
+                                                        <input type="text" ng-model="query" ng-change="search()"
+                                                            placeholder="Tìm hàng hóa"
+                                                            title="Tìm sản phẩm theo mã hoặc tên">
+                                                    </form>
+                                                </div>
+                                            </div><!-- End Search Bar -->
+                                      
+                                            <div class="col-lg-4">
+                                                <div class="search-bar">
+                                                    <button ng-click="webcam()" class="btn btn-dark"><i
+                                                            class="fa-solid fa-qrcode"></i>
+                                                        Scan QR
+                                                    </button>
+                                                </div>
+                                            </div>
 
+                                        </div>
                                     </div>
+                                
                                 </div>
 
                                 <div ng-show="showProducts" class="list-group product-list">
                                     <div class="table-wrapper">
                                         <table class="table">
                                             <tbody>
-                                                <tr ng-repeat="product in products | filter: query">
-                                                    <td><img src="" alt="seach" width="10%"></td>
-                                                    <td> {{ product.code }} <br>
-                                                        {{ product.name }} <br>
-                                                        Tồn: {{ product.quantity }}
-                                                    </td>
-                                                    <td>{{ product.price }}</td>
-                                                    <td><a href="" class="btn btn-primary">add</a></td>
+                                                <tr ng-repeat="p in listQuantity | filter: query" >                                        
+                                                        <td>
+                                                            <a style="display: flex;">
+                                                                <div>
+                                                                    <img src="" alt="seach" width="10%"> 
+                                                                </div>
+                                                                <div style="padding-left: 15px;">
+                                                                    Mã: {{ p.code }} <br>
+                                                                    Tên: {{ p.name }} <br>
+                                                                    Tồn: {{ p.quantity }}
+                                                                </div>
+                                                                <div style="padding-left: 15px;">
+                                                                    Màu sắc: {{ p.nameColor }}
+                                                                </div>
+                                                                <div style="padding-left: 15px;">
+                                                                    Size: {{ p.nameSize }}
+                                                                </div>
+                                                                <div style="padding-left: 15px;">
+                                                                    Đơn giá: {{ p.price }} VND
+                                                                </div>
+                                                            </a>
+                                                        </td>                                              
+                                                    </div>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -145,7 +114,62 @@
 
                         </div>
 
+                    </div>  
+
+                    <div class="col-lg-12">
+
+                        <div class="card ">
+
+                            <div class="card-body" style="padding: 5px;">
+                                <div class="row" style="margin-left: 5px;">
+                                    <div class="col-lg-3">
+                                        <button ng-click="addBill()" class="btn btn-dark" style="width: 120px;">Tạo
+                                            hóa đơn</button>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h5>Có {{listBill.length}} đơn hàng đang chờ</h5>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body" style="height: 90px;">
+
+                                <div>
+
+                                    <span ng-repeat="bill in pager.items">
+                                        <button ng-click="choose(bill.code,bill.id)"
+                                            style="margin: 2px 1px; width: 80px;"
+                                            class="btn btn-dark">{{bill.code}}</button>
+                                    </span>
+
+                                    <div ng-if="listBill.length > 0">
+                                        <div class="btn-group" aria-label="Basic outlined example">
+                                            <button ng-click="pager.first()" type="button" class="btn btn-dark"><i
+                                                    class="fa-solid fa-angles-left"></i></button>
+                                            <button ng-click="pager.prev()" type="button" class="btn btn-dark"><i
+                                                    class="fa-solid fa-angle-left"></i></button>
+                                            <button type="button" class="btn btn-dark">{{pager.page+1}}
+                                                of
+                                                {{pager.count}}</button>
+                                            <button ng-click="pager.next()" type="button" class="btn btn-dark"><i
+                                                    class="fa-solid fa-angle-right"></i></button>
+                                            <button ng-click="pager.last()" type="button" class="btn btn-dark"><i
+                                                    class="fa-solid fa-angles-right"></i></button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- End Right side columns -->
+
                     </div>
+
+                   
 
                 </div>
             </div>
@@ -153,7 +177,7 @@
 
 
             <!-- Right side columns -->
-            <div class="col-lg-5">
+            <div class="col-lg-4">
                 <div class="row">
 
                     <div class="col-lg-12">
@@ -162,8 +186,12 @@
 
                             <div class="card-body" style="height: 440px;">
                                 <div class="row">
-                                    <h5 class="card-title" style="padding-top: 5px;">Nhân viên bán hàng: {{user.fullname}}<span> | {{ currentDate | date:'dd/MM/yyyy'  }}</span></h5>
-                                    <h5 class="card-title">Đơn hàng: {{hoadonCode.code}}</h5>
+                                    <h5 class="card-title"
+                                        style="padding: 10px 5px 5px 5px; margin-left: 10px; margin-bottom: 0;">Nhân
+                                        viên bán hàng: {{user.fullname}}<span> | {{ currentDate | date:'dd/MM/yyyy'
+                                            }}</span></h5>
+                                    <h5 class="card-title" style="padding: 5px; margin-left: 10px; margin-bottom: 0;">
+                                        Đơn hàng: {{hoadonCode.code}}</h5>
                                 </div>
 
                                 <hr>

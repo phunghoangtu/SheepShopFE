@@ -170,42 +170,77 @@ window.SellController = function (
   ///////////////////////////////////////////////////
 
   $scope.showProducts = false;
-  $scope.products = [
-    { code: "P001", name: "Sản phẩm 1", price: "90$", quantity: "100" },
-    { code: "P002", name: "Sản phẩm 2", price: "90$", quantity: "200" },
-    { code: "P003", name: "Sản phẩm 3", price: "90$", quantity: "300" },
-    { code: "P004", name: "Sản phẩm 4", price: "90$", quantity: "400" },
-    { code: "P004", name: "Sản phẩm 5", price: "90$", quantity: "500" },
-    { code: "P004", name: "Sản phẩm 7", price: "90$", quantity: "600" },
-    { code: "P004", name: "Sản phẩm 8", price: "90$", quantity: "700" },
-    { code: "P004", name: "Sản phẩm 9", price: "90$", quantity: "800" },
-    { code: "P004", name: "Sản phẩm 10", price: "90$", quantity: "900" },
-    { code: "P004", name: "Sản phẩm 11", price: "90$", quantity: "1000" },
-    { code: "P004", name: "Sản phẩm 12", price: "90$", quantity: "1200" },
-    { code: "P004", name: "Sản phẩm 13", price: "90$", quantity: "1300" },
-    { code: "P004", name: "Sản phẩm 14", price: "90$", quantity: "1400" },
-    { code: "P004", name: "Sản phẩm 15", price: "90$", quantity: "1500" },
-    { code: "P004", name: "Sản phẩm 16", price: "90$", quantity: "1600" },
-    { code: "P004", name: "Sản phẩm 17", price: "90$", quantity: "1800" },
-    { code: "P004", name: "Sản phẩm 18", price: "90$", quantity: "1900" },
-    { code: "P004", name: "Sản phẩm 19", price: "90$", quantity: "1700" },
-    { code: "P004", name: "Sản phẩm 20", price: "90$", quantity: "2000" },
-  ];
+ 
+  $scope.getAllProduct = function () {
+    let url = "http://localhost:8080/api/product";
+    let urlcolor = "http://localhost:8080/api/color";
+    let urlsize = "http://localhost:8080/api/size";
+  
+    // load color
+    $scope.listColor = [];
+    $http.get(urlcolor).then(function (response) {
+      $scope.listColor = response.data;
+    });
+    // load size
+    $scope.listSize = [];
+    $http.get(urlsize).then(function (response) {
+      $scope.listSize = response.data;
+    });
+    //load product
+    $scope.listPro = [];
+    $http.get(url).then(function (response) {
+      $scope.listPro = response.data;
+    });
+    $scope.listQuantity = [];
+    //load size and color of product
+    $http
+      .get("http://localhost:8080/api/productdetail_color_size/getall")
+      .then(function (resp) {
+        $scope.listQuantity = resp.data;
+      });
+  };
+
+  $scope.getAllProduct();
 
   $scope.search = function () {
     // Kiểm tra xem có dữ liệu nhập vào hay không
     if ($scope.query) {
       // Hiển thị danh sách sản phẩm
+      $scope.getAllProduct();
       $scope.showProducts = true;
     } else {
+      $scope.getAllProduct();
       // Ẩn danh sách sản phẩm nếu không có dữ liệu nhập vào
       $scope.showProducts = false;
     }
   };
 
+  $scope.timkiem = function () {
+    var text = document.getElementById("name").value;
+    var idColor = document.getElementById("mausac").value;
+    var idSize = document.getElementById("kichthuoc").value;
+    let idcolor = idColor != "" ? idColor : null;
+    let idsize = idSize != "" ? idSize : null;
+    let text1 = text != "" ? text : null;
+  
+    var param = {
+      keyword: text1,
+      idColor: idcolor,
+      idSize: idsize,
+    };
+    $http({
+      method: "GET",
+      url: "http://localhost:8080/api/productdetail_color_size/getallbykeyword",
+      params: param,
+    }).then(function (resp) {
+      $scope.listQuantity = resp.data;
+    });
+  };
+
   $scope.selectProduct = function (product) {
     // Xử lý khi người dùng chọn một sản phẩm từ danh sách
-    console.log("Selected product:", product);
+
+
   };
 
   //////////////////////////////////////////////////////

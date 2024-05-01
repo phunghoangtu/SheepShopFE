@@ -3,25 +3,90 @@
     <section class="section dashboard">
         <div class="row">
 
-            <div class="col-lg-8">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
 
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title" style="padding: 20px 0;">KẾT QUẢ BÁN HÀNG HÔM NAY</h5>
+                <div class="row">
 
-                        <div class="row">
+                    <!-- Sales Card -->
+                    <div class="col-xxl-4 col-md-4">
+                        <div class="card info-card sales-card">
 
-                            <i class="bi bi-coin result-coin"></i>
+                            <div class="card-body">
+                                <h5 class="card-title">Hóa đơn</h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-cart"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6> {{ ngay.soLuong }}</h6>                                      
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
+                    </div><!-- End Sales Card -->
 
-                    </div>
+                    <!-- Revenue Card -->
+                    <div class="col-xxl-4 col-md-4">
+                        <div class="card info-card revenue-card">
+
+                            <div class="card-body">
+                                <h5 class="card-title">Doanh thu</h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-currency-dollar"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{ngay.doanhThu}}</h6>                                     
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!-- End Revenue Card -->
+
+                    <!-- Customers Card -->
+                    <div class="col-xxl-4 col-md-4">
+
+                        <div class="card info-card customers-card">
+
+                            <div class="card-body">
+                                <h5 class="card-title">Khách hàng</h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-people"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>0</h6>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div><!-- End Customers Card -->
+
                 </div>
 
                 <div class="card">
                     <div class="card-body">
 
                         <h5 class="card-title" style="padding: 20px 0;">DOANH THU THUẦN THÁNG NÀY</h5>
+
+                        <div style="display: inline-flex; padding-bottom: 20px;">
+                            <span style="padding: 5px;">Từ ngày</span>
+                            <input type="date" id="tungay" class="haninput" style="width: 200px;">
+                            <span style="padding: 5px;">Đến ngày</span>
+                            <input type="date" id="denngay" class="haninput" style="width: 200px;">
+                        </div>
+
 
                         <!-- Default Tabs -->
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -42,22 +107,49 @@
                             </li>
                         </ul>
                         <div class="tab-content pt-2" id="myTabContent">
-                            <div class="tab-pane fade show active" id="bydate" role="tabpanel"
-                                aria-labelledby="bydate-tab">
-                                Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora
-                                libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet
-                                perspiciatis odit. Fuga sequi sed ea saepe at unde.
+                            <div class="tab-pane fade show active" id="bydate" role="tabpanel" aria-labelledby="bydate-tab">
+
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+
+                                            <!--  Chart -->
+                                            <div id="barChart" style="min-height: 300px; min-width: 300px;"
+                                                class="echart"></div>
+                                            <!--  Chart -->
+
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="tab-pane fade" id="hourly" role="tabpanel" aria-labelledby="hourly-tab">
-                                Nesciunt totam et. Consequuntur magnam aliquid eos nulla dolor iure eos quia.
-                                Accusantium distinctio omnis et atque fugiat. Itaque doloremque aliquid sint quasi quia
-                                distinctio similique. Voluptate nihil recusandae mollitia dolores. Ut laboriosam
-                                voluptatum dicta.
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+
+                                            <!--  Chart -->
+                                            <div id="barChart" style="min-height: 300px; min-width: 300px;"
+                                                class="echart"></div>
+                                            <!--  Chart -->
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="theothu" role="tabpanel" aria-labelledby="theothu-tab">
-                                Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque.
-                                Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit
-                                molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+
+                                            <!--  Chart -->
+                                            <div id="barChart" style="min-height: 300px; min-width: 300px;"
+                                                class="echart"></div>
+                                            <!--  Chart -->
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div><!-- End Default Tabs -->
 
@@ -65,7 +157,50 @@
                     </div>
                 </div>
 
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-lg-4">
+                                <h5 class="card-title" style="margin-top: 20px;">Trạng Thái Đơn Hàng</h5>
+                            </div>
+                            <div class="col-lg-8">
+                                <h5 class="card-title" style="margin-top: 20px;">TOP 5 Sản Phẩm Bán Chạy Tháng Này</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <canvas id="myChart1" width="150" height="150"></canvas>
+                            </div>
+                            <div class="col-lg-8">
+
+
+                                <table class="table">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Sản Phẩm</th>
+                                        <th>Số lượng đã bán</th>
+                                        <th>Doanh thu</th>
+                                    </tr>
+                                    <tr ng-repeat="sp in pagerProductSold.items">
+                                        <td> {{$index + 1}}</td>
+                                        <td>
+                                            <img style="width: 50px;height: 50px;" src="{{sp.url}}">
+                                            {{sp.name}}
+                                        </td>
+                                        <td>{{sp.soLuong}}</td>
+                                        <td>{{sp.doanhThu | currency:'':0}} VNĐ</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
+            <!-- End left side columns -->
+
 
         </div>
     </section>
