@@ -95,12 +95,9 @@ window.SellController = function (
   let codeBill = null;
 
   $scope.choose = function (code, id) {
-
-
-
+    $scope.hoadonCode = { code };
     idBill = id;
     codeBill = code;
-    $scope.hoadon = {};
 
     //get
     $http
@@ -123,6 +120,14 @@ window.SellController = function (
           $scope.tongTien + $scope.phiShip - $scope.giamGia;
       });
 
+    // lấy danh sách khách hàng
+
+    $scope.listCustomer = [];
+    $http.get("http://localhost:8080/api/customer").then(function (resp) {
+      $scope.listCustomer = resp.data;
+    });
+
+    ////////////////////////////////////////////////////////////////////
     $scope.listItem = [];
     idBill = id;
     $scope.hoadon = {};
@@ -162,8 +167,15 @@ window.SellController = function (
       $scope.tienThanhToan;
     };
 
-    ///////////////////////////////////////////////////
   };
+ ///////////////////////////////////////////////////
+
+
+  
+
+
+
+  
 
   $scope.showProducts = false;
   $scope.products = [

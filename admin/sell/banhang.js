@@ -1337,7 +1337,6 @@ window.BanHangController = function (
   $scope.SanPhamQR = function (id) {
     $scope.isSanPhamQR = !$scope.isSanPhamQR;
     document.getElementById("qrsp").style.display = "none";
-
     $scope.getAllByQR(id);
   };
 
