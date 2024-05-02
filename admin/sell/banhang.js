@@ -73,6 +73,7 @@ window.BanHangController = function (
   };
   $scope.getAllBill();
 
+  
   $scope.magiamgia = function () {
     if (document.getElementById("chuongtrinhkhuyenmaiCheck").checked == true) {
       document.getElementById("magiamgia").style.display = "none";
@@ -336,6 +337,7 @@ window.BanHangController = function (
 
     $scope.getAllProduct();
   };
+  
   // thêm giỏ hàng
   let idPro = null;
   $scope.themvaogio = function (id) {
@@ -750,7 +752,6 @@ window.BanHangController = function (
   };
 
   //hủy hóa đơn
-
   $scope.huyhoadon = function (code) {
     Swal.fire({
       title: "Xác nhận hủy đơn hàng " + code + " ?",
