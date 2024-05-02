@@ -100,7 +100,7 @@
                 <div class="row mb-3">
                   <label for="company" class="col-md-4 col-lg-3 col-form-label">Tên người dùng</label>
                   <div class="col-md-8 col-lg-4">
-                    <input ng-model="profile.code" type="text" class="form-control" autofocus="" disabled>
+                    <input ng-model="profile.username" type="text" class="form-control" autofocus="" disabled>
                   </div>
                   <div ng-repeat="err in validationErrors">
                     <span class="validate" ng-if="err.objectName == 'capNhatProfile' && err.field == 'Username'">

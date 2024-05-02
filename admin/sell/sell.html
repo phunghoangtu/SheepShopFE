@@ -42,9 +42,9 @@
                                     <div class="table-wrapper">
                                         <table class="table">
                                             <tbody>
-                                                <tr ng-repeat="cart in listQuantity | filter: query"
-                                                    ng-click="themvaogio(cart.id)">
-                                                    <td style="display: flex;">
+                                                <tr>
+                                                    <td ng-repeat="cart in listQuantity | filter: query"
+                                                        ng-click="themvaogio(cart.id)" style="display: flex;">
 
                                                         <div>
                                                             <img src="" alt="seach" width="10%">

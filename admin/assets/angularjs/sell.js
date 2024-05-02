@@ -200,7 +200,6 @@ window.SellController = function (
         $scope.listQuantity = resp.data;
       });
   };
-
   $scope.getAllProduct();
 
   $scope.search = function () {
@@ -221,7 +220,6 @@ window.SellController = function (
   // thêm giỏ hàng
   let idPro = null;
   $scope.themvaogio = function (id) {
-    // Xử lý khi người dùng chọn một sản phẩm từ danh sách
     $http
       .get("http://localhost:8080/api/productdetail_color_size/getbyid/" + id)
       .then(function (resp) {
@@ -231,110 +229,196 @@ window.SellController = function (
             if (resp.data.quantity == 0) {
               Swal.fire("Số lượng sản phẩm này đang tạm hết !", "", "error");
             } else {
-              // Kiểm tra sản phẩm có tồn tại trong giỏ hàng hay không
-              var isProductExist = false;
-              var existingBillDetailId = null;
+              Swal.fire({
+                title: "Mời nhập số lượng thêm vào giỏ",
+                input: "text",
+                showCancelButton: true,
+              }).then((result) => {
+                if (result.value.trim() === "") {
+                  Swal.fire("Số lượng không được bỏ trống !", "", "error");
+                  return;
+                }
+                if (result.value) {
+                  if (parseInt(result.value) <= 0) {
+                    Swal.fire("Số lượng phải lớn hơn 0 !", "", "error");
+                    return;
+                  }
+                  if (parseInt(result.value) > 100) {
+                    Swal.fire("Số lượng phải nhỏ hơn 100 !", "", "error");
+                    return;
+                  }
 
-              $http
-                .get("http://localhost:8080/api/bill/getallbybill/" + codeBill)
-                .then(function (bill) {
-                  for (let i = 0; i < bill.data.length; i++) {
-                    if (
-                        bill.data[i].productDetail.id ==
-                        resp.data.idProductDetail &&
-                        bill.data[i].idColor == resp.data.idColor &&
-                        bill.data[i].idSize == resp.data.idSize
-                    ) {
-                      isProductExist = true;
-                      existingBillDetailId = bill.data[i].id;
-                      break;
+                  var numberRegex = /^[0-9]+$/;
+                  if (!numberRegex.test(result.value)) {
+                    Swal.fire("Số lượng phải là số !!", "", "error");
+                    return;
+                  }
+                  //get số lượng sản phẩm đang có
+                  var getPram = {
+                    IdProduct: resp.data.idProductDetail,
+                    IdColor: resp.data.idColor,
+                    IdSize: resp.data.idSize,
+                  };
+                  $http({
+                    method: "GET",
+                    url: "http://localhost:8080/api/productdetail_color_size/getQuantityProductAndColorAndSize",
+                    params: getPram,
+                  }).then(function (soluong) {
+                    if (parseInt(soluong.data) < parseInt(result.value)) {
+                      Swal.fire(
+                        "Số lượng bạn nhập đang lớn hơn số lượng còn hàng !!",
+                        "",
+                        "error"
+                      );
+                      return;
                     }
-                  }
-
-                  if (isProductExist) {
-                    // Nếu sản phẩm đã tồn tại trong giỏ hàng, cập nhật số lượng
                     $http
-                      .put(
-                        "http://localhost:8080/api/bill/updateBillDetail/" +
-                          existingBillDetailId,
-                        {
-                          idBill: idBill,
-                          idProductDetail: resp.data.idProductDetail,
-                          idColor: resp.data.idColor,
-                          idSize: resp.data.idSize,
-                          quantity: resp.data.quantity + 1,
-                          unitPrice: pro.data.price,
+                      .get(
+                        "http://localhost:8080/api/bill/getallbybill/" +
+                          codeBill
+                      )
+                      .then(function (bill) {
+                        for (let i = 0; i < bill.data.length; i++) {
+                          if (
+                            bill.data[i].productDetail.id ==
+                              resp.data.idProductDetail &&
+                            bill.data[i].idColor == resp.data.idColor &&
+                            bill.data[i].idSize == resp.data.idSize
+                          ) {
+                            // nếu tồn tại rồi thì updatate số lượng
+                            $http
+                              .put(
+                                "http://localhost:8080/api/bill/updateBillDetail/" +
+                                  bill.data[i].id,
+                                {
+                                  idBill: idBill,
+                                  idProductDetail: resp.data.idProductDetail,
+                                  idColor: resp.data.idColor,
+                                  idSize: resp.data.idSize,
+                                  quantity:
+                                    parseInt(result.value) +
+                                    parseInt(bill.data[i].quantity),
+                                  unitPrice: pro.data.price,
+                                }
+                              )
+                              .then(function (billdetail) {
+                                //get số lượng sản phẩm đang có
+                                var getPram = {
+                                  IdProduct: resp.data.idProductDetail,
+                                  IdColor: resp.data.idColor,
+                                  IdSize: resp.data.idSize,
+                                };
+                                $http({
+                                  method: "GET",
+                                  url: "http://localhost:8080/api/productdetail_color_size/getQuantityProductAndColorAndSize",
+                                  params: getPram,
+                                }).then(function (soluong) {
+                                  //  cập nhật số lượng sản phẩm
+                                  var param2 = {
+                                    IdProduct: resp.data.idProductDetail,
+                                    IdColor: resp.data.idColor,
+                                    IdSize: resp.data.idSize,
+                                    Quantity:
+                                      parseInt(soluong.data) -
+                                      parseInt(result.value),
+                                  };
+                                  $http({
+                                    method: "PUT",
+                                    url: "http://localhost:8080/api/productdetail_color_size/updateQuantity",
+                                    params: param2,
+                                  }).then(function (resp) {
+                                    Swal.fire(
+                                      "Đã thêm vào giỏ !",
+                                      "",
+                                      "success"
+                                    );
+
+                                    $scope.choose(codeBill, idBill);
+
+                                    if ($scope.isPopupVisible == true) {
+                                      $scope.getAllProduct();
+                                    } else {
+                                      console.log(pro.data.id);
+                                      $scope.getAllByQR(pro.data.id);
+                                    }
+                                  });
+                                });
+                              });
+                            return;
+                          }
                         }
-                      )
-                      .then(function (billdetail) {
-                        // Cập nhật số lượng sản phẩm
-                        var param2 = {
-                          IdProductDetail: resp.data.idProductDetail,
-                          IdColor: resp.data.idColor,
-                          IdSize: resp.data.idSize,
-                          Quantity: resp.data.quantity - 1,
-                        };
 
-                        $http({
-                          method: "PUT",
-                          url: "http://localhost:8080/api/productdetail_color_size/updateQuantity",
-                          params: param2,
-                        }).then(function (resp) {
-                          Swal.fire("Đã thêm vào giỏ !", "", "success");
-                          $scope.choose(codeBill, idBill);
-
-                          if ($scope.isPopupVisible == true) {
-                            $scope.getAllProduct();
-                          } else {
-                            console.log(pro.data.id);
-                            $scope.getAllByQR(pro.data.id);
-                          }
-                        });
+                        // nếu chưa tồn tại thì thêm vào giỏ
+                        $http
+                          .post(
+                            "http://localhost:8080/api/bill/addBillDetail",
+                            {
+                              // add bill detail
+                              idBill: idBill,
+                              idProductDetail: resp.data.idProductDetail,
+                              idColor: resp.data.idColor,
+                              idSize: resp.data.idSize,
+                              quantity: result.value,
+                              unitPrice: pro.data.price,
+                            }
+                          )
+                          .then(function (billdetail) {
+                            //get số lượng sản phẩm đang có
+                            var getPram = {
+                              IdProduct: resp.data.idProductDetail,
+                              IdColor: resp.data.idColor,
+                              IdSize: resp.data.idSize,
+                            };
+                            $http({
+                              method: "GET",
+                              url: "http://localhost:8080/api/productdetail_color_size/getQuantityProductAndColorAndSize",
+                              params: getPram,
+                            }).then(function (soluong) {
+                              //  cập nhật số lượng sản phẩm
+                              var param2 = {
+                                IdProduct: resp.data.idProductDetail,
+                                IdColor: resp.data.idColor,
+                                IdSize: resp.data.idSize,
+                                Quantity:
+                                  parseInt(soluong.data) -
+                                  parseInt(result.value),
+                              };
+                              $http({
+                                method: "PUT",
+                                url: "http://localhost:8080/api/productdetail_color_size/updateQuantity",
+                                params: param2,
+                              }).then(function (resp) {
+                                Swal.fire("Đã thêm vào giỏ !", "", "success");
+                                $scope.choose(codeBill, idBill);
+                                if ($scope.isPopupVisible == true) {
+                                  $scope.getAllProduct();
+                                } else {
+                                  console.log(pro.data.id);
+                                  $scope.getAllByQR(pro.data.id);
+                                }
+                              });
+                            });
+                          });
                       });
-                  } else {
-                    // Nếu sản phẩm chưa tồn tại trong giỏ hàng, thêm vào giỏ hàng
-                    var billDetail = {
-                      idBill: idBill,
-                      idProductDetail: resp.data.idProductDetail,
-                      idColor: resp.data.idColor,
-                      idSize: resp.data.idSize,
-                      quantity: 1, // Số lượng mặc định là 1
-                      unitPrice: pro.data.price,
-                    };
-
-                    $http
-                      .post(
-                        "http://localhost:8080/api/bill/addBillDetail",
-                        billDetail
-                      )
-                      .then(function (billdetail) {
-                        // Cập nhật số lượng sản phẩm
-                        var param2 = {
-                          IdProduct: resp.data.idProductDetail,
-                          IdColor: resp.data.idColor,
-                          IdSize: resp.data.idSize,
-                          Quantity: resp.data.quantity - 1,
-                        };
-
-                        $http({
-                          method: "PUT",
-                          url: "http://localhost:8080/api/productdetail_color_size/updateQuantity",
-                          params: param2,
-                        }).then(function (resp) {
-                          Swal.fire("Đã thêm vào giỏ !", "", "success");
-                          $scope.choose(codeBill, idBill);
-
-                          if ($scope.isPopupVisible == true) {
-                            $scope.getAllProduct();
-                          } else {
-                            console.log(pro.data.id);
-                            $scope.getAllByQR(pro.data.id);
-                          }
-                        });
-                      });
-                  }
-                });
+                  });
+                }
+              });
             }
+          });
+      });
+  };
+
+  // thêm giỏ hàng
+
+  $scope.themvaogio = function (id) {
+    $http
+      .get("http://localhost:8080/api/productdetail_color_size/getbyid/" + id)
+      .then(function (resp) {   
+        $http
+          .get("http://localhost:8080/api/product/" + resp.data.idProductDetail)
+          .then(function (pro) {
+            // Thực hiện thêm vào giỏ hàng
+            
           });
       });
   };
