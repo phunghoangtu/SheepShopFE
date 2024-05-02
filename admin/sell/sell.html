@@ -1,6 +1,5 @@
 <!-- ======= Main ======= -->
 <main id="main" class="main">
-
     <section class="section dashboard">
         <div class="row">
 
@@ -16,7 +15,6 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="row">
-
                                             <div class="col-lg-5">
                                                 <div class="search-bar">
                                                     <form class="search-form d-flex align-items-center">
@@ -26,54 +24,71 @@
                                                     </form>
                                                 </div>
                                             </div><!-- End Search Bar -->
-                                      
+
                                             <div class="col-lg-4">
                                                 <div class="search-bar">
                                                     <button ng-click="webcam()" class="btn btn-dark"><i
-                                                            class="fa-solid fa-qrcode"></i>
-                                                        Scan QR
+                                                            class="fa-solid fa-qrcode"></i>QR
                                                     </button>
                                                 </div>
                                             </div>
 
                                         </div>
                                     </div>
-                                
+
                                 </div>
 
                                 <div ng-show="showProducts" class="list-group product-list">
                                     <div class="table-wrapper">
                                         <table class="table">
                                             <tbody>
-                                                <tr ng-repeat="p in listQuantity | filter: query" >                                        
-                                                        <td>
-                                                            <a style="display: flex;">
-                                                                <div>
-                                                                    <img src="" alt="seach" width="10%"> 
-                                                                </div>
-                                                                <div style="padding-left: 15px;">
-                                                                    Mã: {{ p.code }} <br>
-                                                                    Tên: {{ p.name }} <br>
-                                                                    Tồn: {{ p.quantity }}
-                                                                </div>
-                                                                <div style="padding-left: 15px;">
-                                                                    Màu sắc: {{ p.nameColor }}
-                                                                </div>
-                                                                <div style="padding-left: 15px;">
-                                                                    Size: {{ p.nameSize }}
-                                                                </div>
-                                                                <div style="padding-left: 15px;">
-                                                                    Đơn giá: {{ p.price }} VND
-                                                                </div>
-                                                            </a>
-                                                        </td>                                              
-                                                    </div>
+                                                <tr ng-repeat="cart in listQuantity | filter: query"
+                                                    ng-click="themvaogio(cart.id)">
+                                                    <td style="display: flex;">
+
+                                                        <div>
+                                                            <img src="" alt="seach" width="10%">
+                                                        </div>
+                                                        <div style="padding-left: 15px;">
+                                                            Mã: {{ cart.code }} <br>
+                                                            Tên: {{ cart.name }} <br>
+                                                            Tồn: {{ cart.quantity }}
+                                                        </div>
+                                                        <div style="padding-left: 15px;">
+                                                            Màu sắc: {{ cart.nameColor }}
+                                                        </div>
+                                                        <div style="padding-left: 15px;">
+                                                            Size: {{ cart.nameSize }}
+                                                        </div>
+                                                        <div style="padding-left: 15px;">
+                                                            Đơn giá: {{ cart.price }} VND
+                                                        </div>
+
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
 
+
+
+                                <!-- qr -->
+                                <div class="popup" ng-class="{ 'show': isQR1 }" id="qr">
+                                    <div class="popup-content2">
+                                        <!-- Nội dung của popup -->
+                                        <h1 class="text-center">Quét QR </h1>
+                                        <div id="reader" style="width:450px;"></div>
+                                        <video id="video" width="350" height="240" autoplay></video>
+                                        <div id="result" class="text-center"></div>
+                                        <canvas id="canvas" style="display: none;"></canvas>
+                                        <div class="text-center" style="padding-top: 5px;">
+                                            <button class="btn btn-danger" ng-click="webcam()">X</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- cart -->
                                 <table class="table ">
                                     <thead>
                                         <th>Code</th>
@@ -109,18 +124,16 @@
                                         </tr>
                                     </tbody>
                                 </table>
-
                             </div>
-
                         </div>
 
-                    </div>  
+                    </div>
 
                     <div class="col-lg-12">
 
                         <div class="card ">
 
-                            <div class="card-body" style="padding: 5px;">
+                            <div class="card-body" style="padding: 10px 5px 0 5px;">
                                 <div class="row" style="margin-left: 5px;">
                                     <div class="col-lg-3">
                                         <button ng-click="addBill()" class="btn btn-dark" style="width: 120px;">Tạo
@@ -169,14 +182,13 @@
 
                     </div>
 
-                   
-
                 </div>
             </div>
+
             <!-- End Left side columns -->
-
-
+            <!-- ///////////////////////////////////////////////////////////////////////////////////// -->
             <!-- Right side columns -->
+
             <div class="col-lg-4">
                 <div class="row">
 
@@ -248,12 +260,10 @@
 
                 </div>
             </div>
+
             <!-- End Right side columns -->
 
         </div>
-
-
     </section>
-
 </main>
 <!-- End #main -->

@@ -167,15 +167,16 @@ window.SellController = function (
       $scope.tienThanhToan;
     };
   };
+
   ///////////////////////////////////////////////////
 
   $scope.showProducts = false;
- 
+
   $scope.getAllProduct = function () {
     let url = "http://localhost:8080/api/product";
     let urlcolor = "http://localhost:8080/api/color";
     let urlsize = "http://localhost:8080/api/size";
-  
+
     // load color
     $scope.listColor = [];
     $http.get(urlcolor).then(function (response) {
@@ -215,35 +216,200 @@ window.SellController = function (
     }
   };
 
-  $scope.timkiem = function () {
-    var text = document.getElementById("name").value;
-    var idColor = document.getElementById("mausac").value;
-    var idSize = document.getElementById("kichthuoc").value;
-    let idcolor = idColor != "" ? idColor : null;
-    let idsize = idSize != "" ? idSize : null;
-    let text1 = text != "" ? text : null;
-  
-    var param = {
-      keyword: text1,
-      idColor: idcolor,
-      idSize: idsize,
-    };
-    $http({
-      method: "GET",
-      url: "http://localhost:8080/api/productdetail_color_size/getallbykeyword",
-      params: param,
-    }).then(function (resp) {
-      $scope.listQuantity = resp.data;
-    });
-  };
+  //////////////////////////////////////////////////////////////////////////////////////////////
 
-  $scope.selectProduct = function (product) {
+  // thêm giỏ hàng
+  let idPro = null;
+  $scope.themvaogio = function (id) {
     // Xử lý khi người dùng chọn một sản phẩm từ danh sách
+    $http
+      .get("http://localhost:8080/api/productdetail_color_size/getbyid/" + id)
+      .then(function (resp) {
+        $http
+          .get("http://localhost:8080/api/product/" + resp.data.idProductDetail)
+          .then(function (pro) {
+            if (resp.data.quantity == 0) {
+              Swal.fire("Số lượng sản phẩm này đang tạm hết !", "", "error");
+            } else {
+              // Kiểm tra sản phẩm có tồn tại trong giỏ hàng hay không
+              var isProductExist = false;
+              var existingBillDetailId = null;
 
+              $http
+                .get("http://localhost:8080/api/bill/getallbybill/" + codeBill)
+                .then(function (bill) {
+                  for (let i = 0; i < bill.data.length; i++) {
+                    if (
+                        bill.data[i].productDetail.id ==
+                        resp.data.idProductDetail &&
+                        bill.data[i].idColor == resp.data.idColor &&
+                        bill.data[i].idSize == resp.data.idSize
+                    ) {
+                      isProductExist = true;
+                      existingBillDetailId = bill.data[i].id;
+                      break;
+                    }
+                  }
 
+                  if (isProductExist) {
+                    // Nếu sản phẩm đã tồn tại trong giỏ hàng, cập nhật số lượng
+                    $http
+                      .put(
+                        "http://localhost:8080/api/bill/updateBillDetail/" +
+                          existingBillDetailId,
+                        {
+                          idBill: idBill,
+                          idProductDetail: resp.data.idProductDetail,
+                          idColor: resp.data.idColor,
+                          idSize: resp.data.idSize,
+                          quantity: resp.data.quantity + 1,
+                          unitPrice: pro.data.price,
+                        }
+                      )
+                      .then(function (billdetail) {
+                        // Cập nhật số lượng sản phẩm
+                        var param2 = {
+                          IdProductDetail: resp.data.idProductDetail,
+                          IdColor: resp.data.idColor,
+                          IdSize: resp.data.idSize,
+                          Quantity: resp.data.quantity - 1,
+                        };
+
+                        $http({
+                          method: "PUT",
+                          url: "http://localhost:8080/api/productdetail_color_size/updateQuantity",
+                          params: param2,
+                        }).then(function (resp) {
+                          Swal.fire("Đã thêm vào giỏ !", "", "success");
+                          $scope.choose(codeBill, idBill);
+
+                          if ($scope.isPopupVisible == true) {
+                            $scope.getAllProduct();
+                          } else {
+                            console.log(pro.data.id);
+                            $scope.getAllByQR(pro.data.id);
+                          }
+                        });
+                      });
+                  } else {
+                    // Nếu sản phẩm chưa tồn tại trong giỏ hàng, thêm vào giỏ hàng
+                    var billDetail = {
+                      idBill: idBill,
+                      idProductDetail: resp.data.idProductDetail,
+                      idColor: resp.data.idColor,
+                      idSize: resp.data.idSize,
+                      quantity: 1, // Số lượng mặc định là 1
+                      unitPrice: pro.data.price,
+                    };
+
+                    $http
+                      .post(
+                        "http://localhost:8080/api/bill/addBillDetail",
+                        billDetail
+                      )
+                      .then(function (billdetail) {
+                        // Cập nhật số lượng sản phẩm
+                        var param2 = {
+                          IdProduct: resp.data.idProductDetail,
+                          IdColor: resp.data.idColor,
+                          IdSize: resp.data.idSize,
+                          Quantity: resp.data.quantity - 1,
+                        };
+
+                        $http({
+                          method: "PUT",
+                          url: "http://localhost:8080/api/productdetail_color_size/updateQuantity",
+                          params: param2,
+                        }).then(function (resp) {
+                          Swal.fire("Đã thêm vào giỏ !", "", "success");
+                          $scope.choose(codeBill, idBill);
+
+                          if ($scope.isPopupVisible == true) {
+                            $scope.getAllProduct();
+                          } else {
+                            console.log(pro.data.id);
+                            $scope.getAllByQR(pro.data.id);
+                          }
+                        });
+                      });
+                  }
+                });
+            }
+          });
+      });
   };
 
-  //////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////
+
+  $scope.webcam = function () {
+    $scope.isQR1 = !$scope.isQR1;
+    if ($scope.isQR1 == false) {
+      const video1 = document.getElementById("video");
+      const stream1 = video1.srcObject;
+      const tracks1 = stream1.getTracks();
+
+      tracks1.forEach(function (track) {
+        track.stop();
+      });
+
+      video1.srcObject = null;
+      document.getElementById("qr").style.display = "none";
+      return;
+    }
+    document.getElementById("qr").style.display = "block";
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then(function (stream) {
+        const video = document.getElementById("video");
+        video.srcObject = stream;
+        video.play();
+      })
+      .catch(function (error) {
+        console.error("Lỗi truy cập máy ảnh: ", error);
+      });
+
+    const canvas = document.getElementById("canvas");
+    const context = canvas.getContext("2d");
+    const video = document.getElementById("video");
+
+    const scan = () => {
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+      const code = jsQR(imageData.data, canvas.width, canvas.height);
+
+      if (code) {
+        // Có dữ liệu từ mã QR, tắt model quét QR
+
+        $scope.SanPhamQR(code.data);
+        $scope.isQR1 = false;
+        document.getElementById("qr").style.display = "none";
+        document.getElementById("qrsp").style.display = "block";
+        const video1 = document.getElementById("video");
+        const stream1 = video1.srcObject;
+        const tracks1 = stream1.getTracks();
+
+        tracks1.forEach(function (track) {
+          track.stop();
+        });
+
+        video1.srcObject = null;
+
+        return;
+      } else {
+        document.getElementById("result").textContent = "Không tìm thấy mã QR.";
+      }
+
+      requestAnimationFrame(scan);
+    };
+
+    video.onloadedmetadata = function () {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      scan();
+    };
+  };
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////
 
   $scope.currentDate = new Date();
 
