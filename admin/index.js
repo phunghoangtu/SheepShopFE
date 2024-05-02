@@ -9,7 +9,7 @@ app.config(function ($routeProvider, $locationProvider) {
     })
     .when("/product/view", {
       templateUrl: "product/index.html",
-      controller: "ProductController",
+      controller: ProductController,
     })
     .when("/sell", {
       templateUrl: "sell/sell.html",

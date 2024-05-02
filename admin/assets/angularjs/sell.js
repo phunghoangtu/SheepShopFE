@@ -31,6 +31,7 @@ window.SellController = function (
       });
   };
 
+  // get all
   $scope.getAllBill = function () {
     $scope.listBill = [];
     $http

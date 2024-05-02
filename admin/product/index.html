@@ -3,13 +3,48 @@
     <section class="section dashboard">
         <div class="row">
 
-            <div class="col-lg-8">
+            <div class="col-lg-3">
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Chi tiết sản phẩm</h5>
 
                         <div class="row">
+
+                            <div style="padding: 5px;">
+                                <button class="btn btn-dark"><i class="fa-solid fa-filter"></i> Lọc</button>
+                            </div>
+
+                            <div>
+                                <label>Danh Mục</label>
+                                <select id="danhmuc" class="form-select-sm" ng-click="filter()">
+                                    <option value="">Tất cả danh mục</option>
+                                    <option ng-repeat="danhmuc in listCategory" value="{{danhmuc.id}}">
+                                        {{danhmuc.name}}</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Thương Hiệu</label>
+                                <select id="thuonghieu" class="form-select-sm" ng-click="filter()">
+                                    <option value="">Tất cả thương hiệu</option>
+                                    <option ng-repeat="thuonghieu in listBrand" value="{{thuonghieu.id}}">
+                                        {{thuonghieu.name}}</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Thiết Kế</label>
+                                <select id="thietke" class="form-select-sm" ng-click="filter()">
+                                    <option value="">Tất cả thiết kế</option>
+                                    <option ng-repeat="thietke in listDesign" value="{{thietke.id}}">
+                                        {{thietke.name}}</option>
+                                </select>
+                            </div>
+                            <div><label>Màu Sắc</label>
+                                <select id="mausac" class="form-select-sm" ng-click="filter()">
+                                    <option value="">Tất cả màu sắc</option>
+                                    <option ng-repeat="mausac in listColor" value="{{mausac.id}}">
+                                        {{mausac.name}}</option>
+                                </select>
+                            </div>
 
 
                         </div>
@@ -18,6 +53,84 @@
                 </div>
 
             </div>
+
+            <div class="col-lg-9">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Chi tiết sản phẩm</h5>
+
+                        <table class="table">
+                            <thead>
+                                <th scope="row">#</th>
+                                <th scope="row">Ảnh</th>
+                                <th scope="row">Mã Sản Phẩm</th>
+                                <th scope="row">Tên Sản Phẩm</th>
+                                <th scope="row">Giá Bán</th>
+                                <th scope="row">Trạng Thái</th>
+                                <th scope="row">Thao tác</th>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="list.length > 0" ng-repeat="sp in pager.items">
+                                    <td> {{$index + 1}}</td>
+                                    <td>
+                                      <span ng-repeat="img in sp.product.productImages">
+                                        <span ng-if="img.mainImage == true">
+                                          <img style="width: 100px;height: 100px" src="{{img.url}}">
+                                        </span>
+                                      </span>
+                                    <div>
+                                       <span class="blinking-text" data-ng-init="getQuantity(sp)"><span ng-if="sp.quantityWarningText != null"><i class="fa-solid fa-triangle-exclamation"></i></span>
+                                      <span ng-bind="sp.quantityWarningText"></span>
+                                    </span>
+                                    </div>
+                                  </td>
+                                    <td>{{sp.product.code}}</td>
+                                    <td>{{sp.product.name}}</td>
+                                    <td>{{sp.price | currency:'':0}} VNĐ</td>                            
+                                    <td>{{sp.status == 0 ? 'Đang hoạt động' : 'Dừng hoạt động'}}</td>
+                                    <td>
+                                    <div>
+                                     <div> <button style="margin-bottom : 5px" class="btn btn-info buttonbtn" ng-click="openChiTiet(sp.id)"><i class="fa-solid fa-circle-info"></i> Chi tiết</button></div>
+                                      <div><a href="#/products/update/{{sp.id}}"><button class="btn btn-indigo buttonbtn"><i class="fa-solid fa-pen-to-square"></i> Sửa</button></a></div>
+                                      <button ng-if="sp.status == 0" style="margin-top: 5px" class="btn btn-danger buttonbtn" ng-click="delete(sp.id)"><i class="fa-solid fa-pause"></i> Dừng</button>
+                                    </div>
+                                    </td>
+                                  </tr>
+                                  <tr ng-if="list.length == 0">
+                                    <td colspan="13">
+                                      <div style="text-align: center;">
+                                        <div><img style="width: 80px; height: 80px;" src="././assets/images/box.png"></div>
+                                        <h4>Không có sản phẩm nào</h4>
+                                      </div>
+                                    </td>
+                                  </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="text-center" ng-if="list.length > 0">
+                            <div class="btn-group" aria-label="Basic outlined example">
+                                <button ng-click="pager.first()" type="button" class="btn btn-outline-secondary"><i
+                                        class="fa-solid fa-angles-left"></i></button>
+                                <button ng-click="pager.prev()" type="button" class="btn btn-outline-secondary"><i
+                                        class="fa-solid fa-angle-left"></i></button>
+                                <button type="button" class="btn btn-outline-secondary">{{pager.page+1}}
+                                    of
+                                    {{pager.count}}</button>
+                                <button ng-click="pager.next()" type="button" class="btn btn-outline-secondary"><i
+                                        class="fa-solid fa-angle-right"></i></button>
+                                <button ng-click="pager.last()" type="button" class="btn btn-outline-secondary"><i
+                                        class="fa-solid fa-angles-right"></i></button>
+                            </div>
+                        </div>
+                       
+                    
+
+
+                </div>
+            </div>
+
+        </div>
 
         </div>
     </section>
