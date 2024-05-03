@@ -13,6 +13,7 @@ html::-webkit-scrollbar {
   /* Độ rộng của thanh cuộn */
   background-color: #F5F5F5;
   /* Màu nền của thanh cuộn */
+  overflow: hidden;
 }
 
 a {
@@ -1351,4 +1352,8 @@ hr {
 
 .buttonbtn {
   font-size: 13px;
+}
+
+.addttsp {
+  border-radius: 50%;
 }

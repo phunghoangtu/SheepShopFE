@@ -7,8 +7,16 @@ app.config(function ($routeProvider, $locationProvider) {
       templateUrl: "chart/index.html",
       controller: ThongKeController,
     })
-    .when("/product/view", {
+    .when("/products/view", {
       templateUrl: "product/index.html",
+      controller: ProductController,
+    })
+    .when("/products/add", {
+      templateUrl: "product/add.html",
+      controller: ProductController,
+    })
+    .when("/products/update", {
+      templateUrl: "product/update.html",
       controller: ProductController,
     })
     .when("/sell", {
