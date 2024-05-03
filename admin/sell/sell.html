@@ -28,7 +28,7 @@
                         <div class="search-bar">
                           <button ng-click="togglePopup()" style="text-align: right;" class="btn btn-dark"><i
                               class="fa-solid fa-circle-plus"></i></button>
-                          <button ng-click="webcam()" class="btn btn-dark"><i class="fa-solid fa-qrcode"></i>QR
+                          <button ng-click="webcam()" class="btn btn-dark"><i class="fa-solid fa-qrcode"></i> QR
                           </button>
                         </div>
                       </div>
@@ -63,244 +63,6 @@
                         </tr>
                       </tbody>
                     </table>
-                  </div>
-                </div>
-
-                <!-- Tìm sản phẩm -->
-                <div class="popup" ng-class="{ 'show': isPopupVisible }">
-                  <div class="popup-content">
-                    <!-- Nội dung của popup -->
-                    <h1>Danh sách sản phẩm </h1>
-                    <div class="timkiem"><input class="input-group-text" id="name" type="text"
-                        placeholder="Tìm theo mã hoặc tên giày.."><button class="btn btn-dark" ng-click="timkiem()"><i
-                          class="fa-solid fa-magnifying-glass"></i></button></div>
-                    <div>
-                      <div class="row">
-                        <div class="col-md-6 loc"><label>Màu Sắc</label>
-                          <select id="mausac" class="form-select-sm" ng-click="timkiem()">
-                            <option value="">Tất cả màu sắc</option>
-                            <option ng-repeat="mausac in listColor" value="{{mausac.id}}">
-                              {{mausac.name}}</option>
-                          </select>
-                        </div>
-                        <div class="col-md-6 loc"><label>Kích Thước</label>
-                          <select id="kichthuoc" class="form-select-sm" ng-click="timkiem()">
-                            <option value="">Tất cả kích thước</option>
-                            <option ng-repeat="kichthuoc in listSize" value="{{kichthuoc.id}}">
-                              Size {{kichthuoc.name}}</option>
-                          </select>
-                        </div>
-
-                      </div>
-
-                      <table class="table">
-                        <thead class="cart__row cart__header">
-                          <tr>
-                            <td colspan="2" class="text-center">Sản Phẩm</td>
-                            <td class="text-center">Giá Bán</td>
-                            <td class="text-center">Số lượng còn</td>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr ng-if="listQuantity.length > 0" ng-repeat="cart in pager1.items"
-                            ng-click="themvaogio(cart.id)">
-                            <td class="cart__image-wrapper cart-flex-item">
-                              <span ng-repeat="pro in listPro">
-                                <span ng-if="pro.id == cart.idProductDetail">
-                                  <span ng-repeat="img in pro.product.productImages">
-                                    <span ng-if="img.mainImage == true">
-                                      <a href="#"><img style="height: 100px;width: 100px;" class="cart__image"
-                                          src="{{img.url}}" alt="Elastic Waist Dress - Navy / Small"></a>
-
-                                    </span>
-                                  </span>
-
-                                </span>
-                              </span>
-                            </td>
-                            <td class="cart__meta small--text-left cart-flex-item">
-                              <div class="list-view-item__title">
-                                <span ng-repeat="pro in listPro">
-                                  <span ng-if="pro.id == cart.idProductDetail">
-                                    {{pro.product.name}}
-                                    <br>
-                                    SKU : {{pro.product.code}}
-                                  </span>
-                                </span>
-                              </div>
-                              <div class="cart__meta-text">
-                                Màu:
-                                <span ng-repeat="color in listColor">
-                                  <span ng-if="color.id == cart.idColor">
-                                    {{color.name}}
-                                  </span>
-                                </span>
-                                <br>
-                                Kích Thước:
-                                <span ng-repeat="size in listSize">
-                                  <span ng-if="size.id == cart.idSize">
-                                    {{size.name}}
-                                  </span>
-                                </span>
-                                <br>
-                              </div>
-                            </td>
-                            <td class="text-center">
-                              <span ng-repeat="pro in listPro">
-                                <span ng-if="pro.id == cart.idProductDetail">
-                                  {{pro.price | currency:'':0}} VNĐ
-                                </span>
-                              </span>
-                            </td>
-                            <td class="cart__update-wrapper cart-flex-item text-center">
-                              {{cart.quantity > 0 ? cart.quantity : 'Tạm hết'}}
-                            </td>
-                          </tr>
-                          <tr ng-if="listQuantity.length == 0">
-                            <td colspan="8">Không có sản phẩm nào</td>
-                          </tr>
-
-
-
-
-                        </tbody>
-
-                      </table>
-                      <div class="text-center" ng-if="listQuantity.length > 0">
-                        <div class="btn-group" role="group" aria-label="Basic outlined example">
-                          <button ng-click="pager1.first()" type="button" class="btn btn-outline-secondary"><i
-                              class="fa-solid fa-angles-left"></i></button>
-                          <button ng-click="pager1.prev()" type="button" class="btn btn-outline-secondary"><i
-                              class="fa-solid fa-angle-left"></i></button>
-                          <button type="button" class="btn btn-outline-secondary">{{pager1.page+1}}
-                            of
-                            {{pager1.count}}</button>
-                          <button ng-click="pager1.next()" type="button" class="btn btn-outline-secondary"><i
-                              class="fa-solid fa-angle-right"></i></button>
-                          <button ng-click="pager1.last()" type="button" class="btn btn-outline-secondary"><i
-                              class="fa-solid fa-angles-right"></i></button>
-                        </div>
-                      </div>
-                    </div>
-
-
-                    <button class="btn btn-primary" ng-click="togglePopup()">Đóng</button>
-                  </div>
-                </div>
-
-                <!-- qr -->
-                <div class="popup" ng-class="{ 'show': isSanPhamQR }" id="qrsp">
-                  <div class="popup-content">
-                    <!-- Nội dung của popup -->
-                    <table class="table">
-                      <thead class="cart__row cart__header">
-                        <tr>
-                          <td colspan="2" class="text-center">Sản Phẩm</td>
-                          <td class="text-center">Giá Bán</td>
-                          <td class="text-center">Số lượng còn</td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr ng-if="listProduct.length > 0" ng-repeat="cart in pager1.items"
-                          ng-click="themvaogio(cart.id)">
-                          <td class="cart__image-wrapper cart-flex-item">
-                            <span ng-repeat="pro in listPro">
-                              <span ng-if="pro.id == cart.idProductDetail">
-                                <span ng-repeat="img in pro.product.productImages">
-                                  <span ng-if="img.mainImage == true">
-                                    <img style="height: 100px;width: 100px;" class="cart__image" src="{{img.url}}"
-                                      alt="Elastic Waist Dress - Navy / Small">
-
-                                  </span>
-                                </span>
-
-                              </span>
-                            </span>
-                          </td>
-                          <td class="cart__meta small--text-left cart-flex-item">
-                            <div class="list-view-item__title">
-                              <span ng-repeat="pro in listPro">
-                                <span ng-if="pro.id == cart.idProductDetail">
-                                  {{pro.product.name}}
-                                  <br>
-                                  SKU : {{pro.product.code}}
-                                </span>
-                              </span>
-                            </div>
-                            <div class="cart__meta-text">
-                              Màu:
-                              <span ng-repeat="color in listColor">
-                                <span ng-if="color.id == cart.idColor">
-                                  {{color.name}}
-                                </span>
-                              </span>
-                              <br>
-                              Kích Thước:
-                              <span ng-repeat="size in listSize">
-                                <span ng-if="size.id == cart.idSize">
-                                  {{size.name}}
-                                </span>
-                              </span>
-                              <br>
-                            </div>
-                          </td>
-                          <td class="text-center">
-                            <span ng-repeat="pro in listPro">
-                              <span ng-if="pro.id == cart.idProductDetail">
-                                {{pro.price | currency:'':0}} VNĐ
-                              </span>
-                            </span>
-                          </td>
-                          <td class="cart__update-wrapper cart-flex-item text-center">
-                            {{cart.quantity > 0 ? cart.quantity : 'Tạm hết'}}
-                          </td>
-                        </tr>
-                        <tr ng-if="listProduct.length == 0">
-                          <td colspan="8">Không có sản phẩm nào</td>
-                        </tr>
-
-
-
-
-                      </tbody>
-
-                    </table>
-                    <div class="text-center" ng-if="listProduct.length > 0">
-                      <div class="btn-group" role="group" aria-label="Basic outlined example">
-                        <button ng-click="pager1.first()" type="button" class="btn btn-outline-secondary"><i
-                            class="fa-solid fa-angles-left"></i></button>
-                        <button ng-click="pager1.prev()" type="button" class="btn btn-outline-secondary"><i
-                            class="fa-solid fa-angle-left"></i></button>
-                        <button type="button" class="btn btn-outline-secondary">{{pager1.page+1}}
-                          of
-                          {{pager1.count}}</button>
-                        <button ng-click="pager1.next()" type="button" class="btn btn-outline-secondary"><i
-                            class="fa-solid fa-angle-right"></i></button>
-                        <button ng-click="pager1.last()" type="button" class="btn btn-outline-secondary"><i
-                            class="fa-solid fa-angles-right"></i></button>
-                      </div>
-                    </div>
-                    <!-- <div id="reader" style="width:500px;height:340px"></div> -->
-
-                    <div style="padding-top: 10px;">
-                      <button class="btn btn-primary" ng-click="SanPhamQR()">X</button>
-                    </div>
-
-                  </div>
-                </div>
-
-                <!-- qr -->
-                <div class="popup" ng-class="{ 'show': isQR1 }" id="qr">
-                  <div class="popup-content2">
-                    <!-- Nội dung của popup -->
-                    <h1 class="text-center">Quét QR </h1>
-                    <div id="reader" style="width:450px;"></div>
-                    <video id="video" width="350" height="240" autoplay></video>
-                    <div id="result" class="text-center"></div>
-                    <canvas id="canvas" style="display: none;"></canvas>
-                    <div class="text-center" style="padding-top: 5px;">
-                      <button class="btn btn-danger" ng-click="webcam()">X</button>
-                    </div>
                   </div>
                 </div>
 
@@ -353,7 +115,8 @@
                   <div class="col-lg-4">
                     <button ng-click="addbill()" class="btn btn-dark" style="width: 120px;">Tạo
                       hóa đơn</button>
-                      <button ng-click="huyhoadon(hoadon.code)" class="btn btn-dark"><i class="fa-solid fa-ban"></i> Hủy</button>
+                    <button ng-click="huyhoadon(hoadon.code)" class="btn btn-dark"><i class="fa-solid fa-ban"></i>
+                      Hủy</button>
                   </div>
                   <div class="col-lg-6">
                     <h5>Có {{listBill.length}} đơn hàng đang chờ</h5>
@@ -477,6 +240,229 @@
       <!-- End Right side columns -->
 
     </div>
+
+
+
+    <!-- ///////////////////////////////////////////////////////////////////////////////////// -->
+    <!-- Tìm sản phẩm -->
+    <div class="popup" ng-class="{ 'show': isPopupVisible }">
+      <div class="popup-content">
+        <!-- Nội dung của popup -->
+        <h1>Danh sách sản phẩm </h1>
+        <div class="timkiem"><input class="input-group-text" id="name" type="text"
+            placeholder="Tìm theo mã hoặc tên giày.."><button class="btn btn-dark" ng-click="timkiem()"><i
+              class="fa-solid fa-magnifying-glass"></i></button></div>
+        <div>
+          <div class="row">
+            <div class="col-md-6 loc"><label>Màu Sắc</label>
+              <select id="mausac" class="form-select-sm" ng-click="timkiem()">
+                <option value="">Tất cả màu sắc</option>
+                <option ng-repeat="mausac in listColor" value="{{mausac.id}}">
+                  {{mausac.name}}</option>
+              </select>
+            </div>
+            <div class="col-md-6 loc"><label>Kích Thước</label>
+              <select id="kichthuoc" class="form-select-sm" ng-click="timkiem()">
+                <option value="">Tất cả kích thước</option>
+                <option ng-repeat="kichthuoc in listSize" value="{{kichthuoc.id}}">
+                  Size {{kichthuoc.name}}</option>
+              </select>
+            </div>
+          </div>
+          <table class="table">
+            <thead class="cart__row cart__header">
+              <tr>
+                <td colspan="2" class="text-center">Sản Phẩm</td>
+                <td class="text-center">Giá Bán</td>
+                <td class="text-center">Số lượng còn</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-if="listQuantity.length > 0" ng-repeat="cart in pager1.items" ng-click="themvaogio(cart.id)">
+                <td class="cart__image-wrapper cart-flex-item">
+                  <span ng-repeat="pro in listPro">
+                    <span ng-if="pro.id == cart.idProductDetail">
+                      <span ng-repeat="img in pro.product.productImages">
+                        <span ng-if="img.mainImage == true">
+                          <a href="#"><img style="height: 100px;width: 100px;" class="cart__image" src="{{img.url}}"
+                              alt="Elastic Waist Dress - Navy / Small"></a>
+                        </span>
+                      </span>
+                    </span>
+                  </span>
+                </td>
+                <td class="cart__meta small--text-left cart-flex-item">
+                  <div class="list-view-item__title">
+                    <span ng-repeat="pro in listPro">
+                      <span ng-if="pro.id == cart.idProductDetail">
+                        {{pro.product.name}}
+                        <br>
+                        SKU : {{pro.product.code}}
+                      </span>
+                    </span>
+                  </div>
+                  <div class="cart__meta-text">
+                    Màu:
+                    <span ng-repeat="color in listColor">
+                      <span ng-if="color.id == cart.idColor">
+                        {{color.name}}
+                      </span>
+                    </span>
+                    <br>
+                    Kích Thước:
+                    <span ng-repeat="size in listSize">
+                      <span ng-if="size.id == cart.idSize">
+                        {{size.name}}
+                      </span>
+                    </span>
+                    <br>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <span ng-repeat="pro in listPro">
+                    <span ng-if="pro.id == cart.idProductDetail">
+                      {{pro.price | currency:'':0}} VNĐ
+                    </span>
+                  </span>
+                </td>
+                <td class="cart__update-wrapper cart-flex-item text-center">
+                  {{cart.quantity > 0 ? cart.quantity : 'Tạm hết'}}
+                </td>
+              </tr>
+              <tr ng-if="listQuantity.length == 0">
+                <td colspan="8">Không có sản phẩm nào</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="text-center" ng-if="listQuantity.length > 0">
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+              <button ng-click="pager1.first()" type="button" class="btn btn-outline-secondary"><i
+                  class="fa-solid fa-angles-left"></i></button>
+              <button ng-click="pager1.prev()" type="button" class="btn btn-outline-secondary"><i
+                  class="fa-solid fa-angle-left"></i></button>
+              <button type="button" class="btn btn-outline-secondary">{{pager1.page+1}}
+                of
+                {{pager1.count}}</button>
+              <button ng-click="pager1.next()" type="button" class="btn btn-outline-secondary"><i
+                  class="fa-solid fa-angle-right"></i></button>
+              <button ng-click="pager1.last()" type="button" class="btn btn-outline-secondary"><i
+                  class="fa-solid fa-angles-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+
+        <button class="btn btn-primary" ng-click="togglePopup()">Đóng</button>
+      </div>
+    </div>
+    <!-- qr -->
+    <div class="popup" ng-class="{ 'show': isSanPhamQR }" id="qrsp">
+      <div class="popup-content">
+        <!-- Nội dung của popup -->
+        <table class="table">
+          <thead class="cart__row cart__header">
+            <tr>
+              <td colspan="2" class="text-center">Sản Phẩm</td>
+              <td class="text-center">Giá Bán</td>
+              <td class="text-center">Số lượng còn</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-if="listProduct.length > 0" ng-repeat="cart in pager1.items" ng-click="themvaogio(cart.id)">
+              <td class="cart__image-wrapper cart-flex-item">
+                <span ng-repeat="pro in listPro">
+                  <span ng-if="pro.id == cart.idProductDetail">
+                    <span ng-repeat="img in pro.product.productImages">
+                      <span ng-if="img.mainImage == true">
+                        <img style="height: 100px;width: 100px;" class="cart__image" src="{{img.url}}"
+                          alt="Elastic Waist Dress - Navy / Small">
+
+                      </span>
+                    </span>
+
+                  </span>
+                </span>
+              </td>
+              <td class="cart__meta small--text-left cart-flex-item">
+                <div class="list-view-item__title">
+                  <span ng-repeat="pro in listPro">
+                    <span ng-if="pro.id == cart.idProductDetail">
+                      {{pro.product.name}}
+                      <br>
+                      SKU : {{pro.product.code}}
+                    </span>
+                  </span>
+                </div>
+                <div class="cart__meta-text">
+                  Màu:
+                  <span ng-repeat="color in listColor">
+                    <span ng-if="color.id == cart.idColor">
+                      {{color.name}}
+                    </span>
+                  </span>
+                  <br>
+                  Kích Thước:
+                  <span ng-repeat="size in listSize">
+                    <span ng-if="size.id == cart.idSize">
+                      {{size.name}}
+                    </span>
+                  </span>
+                  <br>
+                </div>
+              </td>
+              <td class="text-center">
+                <span ng-repeat="pro in listPro">
+                  <span ng-if="pro.id == cart.idProductDetail">
+                    {{pro.price | currency:'':0}} VNĐ
+                  </span>
+                </span>
+              </td>
+              <td class="cart__update-wrapper cart-flex-item text-center">
+                {{cart.quantity > 0 ? cart.quantity : 'Tạm hết'}}
+              </td>
+            </tr>
+            <tr ng-if="listProduct.length == 0">
+              <td colspan="8">Không có sản phẩm nào</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-center" ng-if="listProduct.length > 0">
+          <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <button ng-click="pager1.first()" type="button" class="btn btn-outline-secondary"><i
+                class="fa-solid fa-angles-left"></i></button>
+            <button ng-click="pager1.prev()" type="button" class="btn btn-outline-secondary"><i
+                class="fa-solid fa-angle-left"></i></button>
+            <button type="button" class="btn btn-outline-secondary">{{pager1.page+1}}
+              of
+              {{pager1.count}}</button>
+            <button ng-click="pager1.next()" type="button" class="btn btn-outline-secondary"><i
+                class="fa-solid fa-angle-right"></i></button>
+            <button ng-click="pager1.last()" type="button" class="btn btn-outline-secondary"><i
+                class="fa-solid fa-angles-right"></i></button>
+          </div>
+        </div>
+
+        <div style="padding-top: 10px;">
+          <button class="btn btn-primary" ng-click="SanPhamQR()">X</button>
+        </div>
+
+      </div>
+    </div>
+    <!-- qr -->
+    <div class="popup" ng-class="{ 'show': isQR1 }" id="qr">
+      <div class="popup-content2">
+        <!-- Nội dung của popup -->
+        <h1 class="text-center">Quét QR </h1>
+        <div style="width:450px;"></div>
+        <video id="video" width="350" height="240" autoplay></video>
+        <div id="result" class="text-center"></div>
+        <canvas id="canvas" style="display: none;"></canvas>
+        <div class="text-center" style="padding-top: 5px;">
+          <button class="btn btn-danger" ng-click="webcam()">X</button>
+        </div>
+      </div>
+    </div>
+
   </section>
 </main>
 <!-- End #main -->
