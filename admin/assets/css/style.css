@@ -8,6 +8,13 @@ body {
   color: #444444;
 }
 
+html::-webkit-scrollbar {
+  width: 0;
+  /* Độ rộng của thanh cuộn */
+  background-color: #F5F5F5;
+  /* Màu nền của thanh cuộn */
+}
+
 a {
   color: #4154f1;
   text-decoration: none;
@@ -213,6 +220,7 @@ h6 {
   border: none;
   border-radius: 5px;
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  font-size: 13px !important;
 }
 .card-title {
   padding: 20px 0 15px 0;
@@ -234,7 +242,7 @@ h6 {
 }
 .card-title span {
   color: #899bbd;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
 }
 
@@ -293,7 +301,7 @@ h6 {
 
 /* Breadcrumbs */
 .breadcrumb {
-  font-size: 14px;
+  font-size: 13px;
   font-family: "Nunito", sans-serif;
   color: #899bbd;
   font-weight: 600;
@@ -1339,4 +1347,8 @@ hr {
 
 .validate {
   color: red;
+}
+
+.buttonbtn {
+  font-size: 13px;
 }
