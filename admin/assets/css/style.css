@@ -223,6 +223,7 @@ h6 {
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
   font-size: 13px !important;
 }
+
 .card-title {
   padding: 20px 0 15px 0;
   font-size: 18px;
@@ -230,6 +231,7 @@ h6 {
   color: #012970;
   font-family: "Poppins", sans-serif;
 }
+
 .card-body {
   padding: 0 20px 20px 20px;
 }
@@ -241,6 +243,7 @@ h6 {
   color: #798eb3;
   padding: 15px;
 }
+
 .card-title span {
   color: #899bbd;
   font-size: 13px;
@@ -417,43 +420,43 @@ h6 {
 }
 
 .table-wrapper {
-    overflow: auto;
-    height: 250px;
+  overflow: auto;
+  height: 250px;
 }
 
 .tableproduct {
-    overflow: hidden;
-    /* Ẩn thanh cuộn ngang */
-    white-space: nowrap;
-    /* Ngăn các dòng trong bảng xuống hàng */
-    height: 315px;
-    /* Chiều cao của phần tử */
+  overflow: hidden;
+  /* Ẩn thanh cuộn ngang */
+  white-space: nowrap;
+  /* Ngăn các dòng trong bảng xuống hàng */
+  height: 315px;
+  /* Chiều cao của phần tử */
 }
 
 .tableproduct::-webkit-scrollbar {
-    width: 8px;
-    /* Độ rộng của thanh cuộn */
-    background-color: #F5F5F5;
-    /* Màu nền của thanh cuộn */
+  width: 8px;
+  /* Độ rộng của thanh cuộn */
+  background-color: #F5F5F5;
+  /* Màu nền của thanh cuộn */
 }
 
 .tableproduct::-webkit-scrollbar-thumb {
-    background-color: #999;
-    /* Màu của thanh cuộn */
+  background-color: #999;
+  /* Màu của thanh cuộn */
 }
 
 .tableproduct::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
-    /* Màu của thanh cuộn khi di chuột qua */
+  background-color: #555;
+  /* Màu của thanh cuộn khi di chuột qua */
 }
 
 .tableproduct {
-    overflow-y: auto;
-    /* Hiển thị thanh cuộn dọc khi cần thiết */
+  overflow-y: auto;
+  /* Hiển thị thanh cuộn dọc khi cần thiết */
 }
 
 .table-wrapper table tbody tr td:hover {
-    background-color: silver;
+  background-color: silver;
 }
 
 
@@ -1283,39 +1286,39 @@ h6 {
 
 .table-quantity::-webkit-inner-spin-button,
 .table-quantity::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .table-quantity {
-    -moz-appearance: textfield;
-    border-width: 0 0 1px;
-    width: 20%;
+  -moz-appearance: textfield;
+  border-width: 0 0 1px;
+  width: 20%;
 }
 
 .table-quantity:hover,
 .table-quantity:focus {
-    outline: none;
-    box-shadow: none;
+  outline: none;
+  box-shadow: none;
 }
 
 #khachthanhtoan::-webkit-inner-spin-button,
 #khachthanhtoan::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 #khachthanhtoan {
-    -moz-appearance: textfield;
-    border-width: 0 0 1px;
-    width: 100%;
-    direction: rtl;
+  -moz-appearance: textfield;
+  border-width: 0 0 1px;
+  width: 100%;
+  direction: rtl;
 }
 
 #khachthanhtoan:hover,
 #khachthanhtoan:focus {
-    outline: none;
-    box-shadow: none;
+  outline: none;
+  box-shadow: none;
 }
 
 hr {
@@ -1334,6 +1337,36 @@ hr {
   z-index: 999;
 }
 
+.popup-content {
+  width: 800px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  height: 700px;
+  overflow: auto;
+  scrollbar-width: thin;
+  /* Width of the scrollbar (thin, auto, none) */
+  scrollbar-color: #333 #999;
+  /* Scrollbar color (thumb color, track color) */
+}
+
+.popup-content1 {
+  width: 300px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
 .popup-content2 {
   width: 400px;
   position: absolute;
@@ -1346,6 +1379,55 @@ hr {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
+.popup-content3 {
+  width: 1100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  height: 650px;
+  overflow: auto;
+  scrollbar-width: thin;
+  /* Width of the scrollbar (thin, auto, none) */
+  scrollbar-color: #333 #999;
+  /* Scrollbar color (thumb color, track color) */
+
+}
+
+.popup-content4 {
+  width: 700px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  height: 500px;
+  overflow: auto;
+  scrollbar-width: thin;
+  /* Width of the scrollbar (thin, auto, none) */
+  scrollbar-color: #333 #999;
+  /* Scrollbar color (thumb color, track color) */
+
+}
+
+.popup-content3::-webkit-scrollbar-thumb {
+  background-color: #333;
+  /* Màu của nút kéo */
+}
+
+/* Hiển thị popup khi có class 'show' */
+.popup.show {
+  display: block;
+}
+
+
 .validate {
   color: red;
 }
@@ -1357,3 +1439,14 @@ hr {
 .addttsp {
   border-radius: 50%;
 }
+
+.bg-success {
+  background-color: green;
+  /* Các quy tắc CSS khác cho lớp bg-success */
+}
+
+.bg-danger {
+  background-color: red;
+  /* Các quy tắc CSS khác cho lớp bg-danger */
+}
+

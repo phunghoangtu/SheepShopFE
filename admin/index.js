@@ -37,6 +37,7 @@ app.config(function ($routeProvider, $locationProvider) {
     .otherwise({
       redirectTo: "/chart/view",
     });
+    
 });
 
 
@@ -180,4 +181,6 @@ app.run(function ($rootScope, $http,AuthService) {
   $rootScope.menu = function(){
       $rootScope.submenu = !$rootScope.submenu;
   }
+
+
 });

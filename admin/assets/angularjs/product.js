@@ -152,4 +152,83 @@ window.ProductController = function (
   };
 
   ////////////////////////////////////////////////////////////////////////////////////////////////
+  // detail products
+  $scope.images = [];
+  $scope.imagesList = [];
+  let check = 0;
+  $scope.openImage = function () {
+    check++;
+    if (check === 1) {
+      $scope.change();
+    }
+    document.getElementById("fileList").click();
+  };
+
+  $scope.change = function () {
+    document.getElementById("fileList").addEventListener("change", function () {
+      var files = this.files;
+      if (files.length > 3) {
+        Swal.fire("Danh sách tối đa 3 ảnh !", "", "error");
+        return;
+      }
+      if ($scope.images.length >= 3) {
+        Swal.fire("Danh sách tối đa 3 ảnh !", "", "error");
+        return;
+      }
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if (file.type.startsWith("image/")) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $scope.$apply(function () {
+              $scope.images.push(e.target.result);
+            });
+          };
+          reader.readAsDataURL(file);
+          $scope.imagesList.push(file);
+        }
+      }
+    });
+  };
+
+  $scope.imageDelete = [];
+  $scope.deleteImage = function (index) {
+    var deletedItem = $scope.images.splice(index, 1);
+    $scope.imageDelete.push(deletedItem[0]);
+  };
+
+  $scope.isChiTietSanPham = false;
+
+  $scope.closeChiTiet = function () {
+    $scope.isChiTietSanPham = !$scope.isChiTietSanPham;
+  };
+
+  $scope.openChiTiet = function (id) {
+    document.getElementById("qrcode").innerHTML = "";
+    var qrcod = new QRCode(document.getElementById("qrcode"));
+    $scope.isChiTietSanPham = !$scope.isChiTietSanPham;
+    qrcod.makeCode(id.toString());
+    $scope.form = {};
+
+    $http
+      .get("http://localhost:8080/api/product/" + id)
+      .then(function (detail) {
+        $scope.form = detail.data;
+        console.log(detail.data);
+      });
+    $http
+      .get("http://localhost:8080/api/product/quantitySold/" + id)
+      .then(function (detail) {
+        $scope.quantitySold = detail.data == "" ? 0 : detail.data;
+      });
+    $http
+      .get("http://localhost:8080/api/product/totalSold/" + id)
+      .then(function (detail) {
+        $scope.totalSold = detail.data == "" ? 0 : detail.data;
+      });
+  };
+
+
+  
+  ////////////////////////////////////////////////////////////////////////////////////////////////
 };
