@@ -85,7 +85,7 @@ window.ProductController = function (
         // pagation
         $scope.pagerop = {
           page: 0,
-          size: 10,
+          size: 5,
           get items() {
             var start = this.page * this.size;
             return $scope.operationhistory.slice(start, start + this.size);
@@ -118,6 +118,11 @@ window.ProductController = function (
       });
   };
   $scope.loadAll();
+
+  /////////////////////////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////////////////////////////////////////
+
   $scope.giamGia = function () {
     if (document.getElementById("giamGia").checked == true) {
       document.getElementById("giamGia1").style.display = "block";
@@ -575,7 +580,7 @@ window.ProductController = function (
                         }
                       }
                     }
-                 
+
                     Swal.fire("Thêm thành công !", "", "success");
                     setTimeout(() => {
                       location.href = "#/products/view";
@@ -622,6 +627,7 @@ window.ProductController = function (
             if (response.status === 200) {
               Swal.fire("Dừng hoạt động thành công !", "", "success");
               $scope.loadAll();
+              $scope.openDungHoatDong();
             } else {
               Swal.fire("Dừng hoạt động thất bại !", "", "error");
             }
@@ -653,6 +659,7 @@ window.ProductController = function (
                 .then(function (response) {
                   $scope.listdhd = response.data;
                 });
+                $scope.loadAll();
             } else {
               Swal.fire("Khôi phục hoạt động thất bại !", "", "error");
             }
@@ -1360,7 +1367,7 @@ window.ProductController = function (
   // pagation
   $scope.pager = {
     page: 0,
-    size: 10,
+    size: 5,
     get items() {
       var start = this.page * this.size;
       return $scope.list.slice(start, start + this.size);
@@ -1391,66 +1398,58 @@ window.ProductController = function (
 
   //export exel
   $scope.exportToExcel = function () {
-    Swal.fire({
-      title: "Bạn có chắc muốn xuất Exel ?",
-      showCancelButton: true,
-      confirmButtonText: "Xuất",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Chuyển dữ liệu thành một mảng các đối tượng JSON
-        var dataArray = $scope.list.map(function (item) {
-          var Materials = item.productDetail_materials
-            .map(function (detail) {
-              return detail.material.name;
-            })
-            .join(", ");
-          var Images = item.product.productImages
-            .map(function (image) {
-              return image.url;
-            })
-            .join(", ");
-          var Color_Size = item.productDetail_size_colors
-            .map(function (size) {
-              return (
-                "Color : " +
-                size.color.name +
-                " { Size " +
-                size.size.name +
-                " | Quantity : " +
-                size.quantity +
-                "}"
-              );
-            })
-            .join(", ");
-          return {
-            Code: item.product.code,
-            Name: item.product.name,
-            Images: Images,
-            Price: item.price,
-
-            Description: item.description,
-            Discount: item.discount,
-            Category: item.category.name,
-            Brand: item.brand.name,
-            Materials: Materials,
-            QuantityByColor_Sizes: Color_Size,
-          };
-        });
-
-        // Tạo một workbook mới
-        var workbook = XLSX.utils.book_new();
-
-        // Tạo một worksheet từ dữ liệu
-        var worksheet = XLSX.utils.json_to_sheet(dataArray);
-
-        // Thêm worksheet vào workbook
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Data Sheet");
-
-        // Xuất tệp Excel
-        XLSX.writeFile(workbook, "data" + new Date() + ".xlsx");
-        Swal.fire("Xuất file exel thành công !", "", "success");
-      }
+    // Chuyển dữ liệu thành một mảng các đối tượng JSON
+    var dataArray = $scope.list.map(function (item) {
+      var Materials = item.productDetail_materials
+        .map(function (detail) {
+          return detail.material.name;
+        })
+        .join(", ");
+      var Images = item.product.productImages
+        .map(function (image) {
+          return image.url;
+        })
+        .join(", ");
+      var Color_Size = item.productDetail_size_colors
+        .map(function (size) {
+          return (
+            "Color : " +
+            size.color.name +
+            " { Size " +
+            size.size.name +
+            " | Quantity : " +
+            size.quantity +
+            "}"
+          );
+        })
+        .join(", ");
+      return {
+        Code: item.product.code,
+        Name: item.product.name,
+        Images: Images,
+        Price: item.price,
+        Description: item.description,
+        Discount: item.discount,
+        Category: item.category.name,
+        Brand: item.brand.name,
+        Materials: Materials,
+        QuantityByColor_Sizes: Color_Size,
+      };
     });
+
+    // Tạo một workbook mới
+    var workbook = XLSX.utils.book_new();
+
+    // Tạo một worksheet từ dữ liệu
+    var worksheet = XLSX.utils.json_to_sheet(dataArray);
+
+    // Thêm worksheet vào workbook
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Data Sheet");
+
+    // Xuất tệp Excel
+    XLSX.writeFile(workbook, "data" + new Date() + ".xlsx");
+    Swal.fire("Xuất file exel thành công !", "", "success");
+    
   };
 
   // search by name
@@ -1669,7 +1668,7 @@ window.ProductController = function (
         // pagation
         $scope.pagerSold = {
           page: 0,
-          size: 10,
+          size: 5,
           get items() {
             var start = this.page * this.size;
             return $scope.listProductSold.slice(start, start + this.size);
@@ -1843,16 +1842,6 @@ window.ProductController = function (
                     }
                   );
                 }
-                // if(detail.data.supplierName != null){
-                //     $http.delete("http://localhost:8080/api/supplier/"+productDetail.data.id);
-                //     $http.post("http://localhost:8080/api/supplier",{
-                //         name : detail.data.supplierName,
-                //         phone : detail.data.supplierPhone,
-                //         address : detail.data.supplierAddress,
-                //         agree : detail.data.supplierAgree,
-                //         idProductDetail : productDetail.data.id
-                //     })
-                // }
 
                 // update size and color
                 let listColorSize =
@@ -2029,7 +2018,7 @@ window.ProductController = function (
       });
   };
 
-  //add colro
+  //add color
   $scope.addMauSac = function () {
     $http
       .post(urlcolor, {
@@ -2132,7 +2121,7 @@ window.ProductController = function (
         // pagation
         $scope.pagerop = {
           page: 0,
-          size: 10,
+          size: 5,
           get items() {
             var start = this.page * this.size;
             return $scope.operationhistory.slice(start, start + this.size);
@@ -2164,6 +2153,7 @@ window.ProductController = function (
         };
       });
   };
+
   $scope.openDungHoatDong = function () {
     //load product
     $scope.listdhd = [];
@@ -2174,7 +2164,7 @@ window.ProductController = function (
       });
     $scope.pagerdhd = {
       page: 0,
-      size: 10,
+      size: 5,
       get items() {
         var start = this.page * this.size;
         return $scope.listdhd.slice(start, start + this.size);
@@ -2202,7 +2192,6 @@ window.ProductController = function (
         this.page = this.count - 1;
       },
     };
-
-    $scope.isDungHoatDong = !$scope.isDungHoatDong;
   };
+  $scope.openDungHoatDong();
 };
