@@ -83,7 +83,7 @@
                   <div class="row mb-3">
                     <label for="" class="col-md-2 col-lg-3 col-form-label">Danh mục</label>
                     <div class="col-md-6">
-                      <select id="danhmuc" class="form-select-sm">
+                      <select id="category" class="form-select-sm">
                         <option ng-repeat="danhmuc in listCategory" value="{{danhmuc.id}}">
                           {{danhmuc.name}}</option>
                       </select>
@@ -93,7 +93,7 @@
                   <div class="row mb-3">
                     <label for="" class="col-md-2 col-lg-3 col-form-label">Thương hiệu</label>
                     <div class="col-md-6">
-                      <select id="thuonghieu" class="form-select-sm">
+                      <select id="brand" class="form-select-sm">
                         <option ng-repeat="thuonghieu in listBrand" value="{{thuonghieu.id}}">
                           {{thuonghieu.name}}</option>
                       </select>
@@ -103,7 +103,7 @@
                   <div class="row mb-3">
                     <label for="fullName" class="col-md-2 col-lg-3 col-form-label">Thiết kế</label>
                     <div class="col-md-6">
-                      <select id="thietke" class="form-select-sm">
+                      <select id="design" class="form-select-sm">
                         <option ng-repeat="thietke in listDesign" value="{{thietke.id}}">
                           {{thietke.name}}</option>
                       </select>
@@ -127,7 +127,60 @@
 
                   <div class="row mb-3">
 
-                  
+                    <div class="col-md-12">
+                      <span style="padding-right: 20px;">Màu Sắc <span class="vaid">*</span></span>
+                      <span ng-repeat="mausac in listColor">
+                        <input type="checkbox" id="Color{{mausac.id}}" ng-click="checkbox(mausac.id)">{{mausac.name}}
+                      </span>
+                      <button ng-click="themMauSac()" class="addttsp1"><i class="fa-solid fa-plus"></i></button>
+                      <div>
+                        <div ng-repeat="mausac in listColor">
+                          <div ng-show="colorStates[mausac.id]" style="padding-top: 15px;">
+                            <label>Số lượng màu {{ mausac.name }}</label>
+                            <br>
+                            <button style="border-radius: 5px;width: 25px;background-color: black;color: white;"
+                              ng-click="themkichthuoc(mausac.id)"><i class="fa-solid fa-plus"></i></button>
+                            <!-- Hiển thị danh sách kích thước và số lượng -->
+                            <div ng-repeat="(idColor, sizes) in colorSizes">
+                              <!-- Tạo một biến để lưu trữ tên màu sắc tương ứng -->
+                              <!-- Hiển thị danh sách kích thước cho màu sắc -->
+                              <span ng-if="idColor == mausac.id">
+                                <span ng-repeat="s in listSize">
+                                  <span ng-repeat="size in sizes">
+                                    <span ng-if="size.size == s.id">
+                                      <span style="padding-left: 10px; padding-bottom: 10px">Size</span> {{ s.name }} <input
+                                        class="han" id="Color{{ mausac.id }}Size{{ s.id }}" type="number" value="{{size.quantity}}"
+                                        style="width: 50px">
+                                      <button ng-click="removeItemBySize(mausac.id,size.size)"
+                                        style="color: rgb(247, 3, 3);border: none;"><i class="fa-solid fa-trash"></i></button>
+                                    </span>
+                                  </span>
+                                </span>
+            
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-12 add">
+                          Chương trình khuyến mãi <button ng-click="themChuongTrinh()" class="addttsp1"><i
+                              class="fa-solid fa-plus"></i></button>
+            
+                          <span ng-repeat="v in listVoucher">
+                            <span ng-repeat="vo in voucherList">
+                              <span ng-if="v.id == vo.id">
+                                <div>
+                                  <input type="hidden" id="Voucher{{v.id}}" value="{{v.id}}">- {{v.name}} [{{v.code}}]
+                                  <button ng-click="removeVoucher(v.id)"
+                                    style="font-size: 20px;background-color: white;color: rgb(247, 3, 3);border: none;"><i
+                                      class="fa-solid fa-xmark"></i></button>
+                                </div>
+                              </span>
+                            </span>
+                          </span>
+                        </div>
+            
+                      </div>
+             
 
 
                   </div>

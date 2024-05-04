@@ -154,10 +154,10 @@
                       </span>
                     </div>
                   </td>
-                  <td style="padding-top: 15px;">{{sp.product.code}}</td>
-                  <td style="padding-top: 15px;">{{sp.product.name}}</td>
-                  <td style="padding-top: 15px;">{{sp.price | currency:'':0}} VNĐ</td>
-                  <td style="padding-top: 15px;">
+                  <td>{{sp.product.code}}</td>
+                  <td>{{sp.product.name}}</td>
+                  <td>{{sp.price | currency:'':0}} VNĐ</td>
+                  <td>
                     <span class="badge" ng-class="{'bg-success': sp.status === 0, 'bg-danger': sp.status !== 0}">
                     {{ sp.status === 0 ? 'Đang bán' : 'Dừng bán' }}</span>
                   </td>
@@ -219,7 +219,7 @@
             <h5 class="card-title">Ảnh đại diện sản phẩm </h5>
             <span ng-repeat="img in form.product.productImages">
               <span ng-if="img.mainImage === true">
-                <img id="output1" src="{{img.url}}" />
+                <img id="output1" width="255px"  src="{{img.url}}" />
               </span>
             </span>
             <img id="output" style="display: none;" />
@@ -227,7 +227,7 @@
 
             <span ng-repeat="img in form.product.productImages">
               <span ng-if="img.mainImage === false">
-                <img style="padding-top: 5px;" id="output1" src="{{img.url}}" />
+                <img style="padding-top: 5px;" width="255px" id="output1" src="{{img.url}}" />
               </span>
             </span>
           </div>
