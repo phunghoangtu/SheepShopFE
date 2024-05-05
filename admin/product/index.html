@@ -30,16 +30,18 @@
           <div class="col-lg-7" style="padding: 10px 0;">
             <a href="#/products/add" class="btn btn-success buttonbtn" title="Thêm sản phẩm"><i
                 class="far fa-plus"></i></a>
-                <!-- ////////////////////////////////// -->
-            <button onclick="openExel()">Mở file</button>
-            <button ng-click="importExel()" class="btn btn-success buttonbtn" title="Import"><i
-                class="fas fa-fw fa-file-import"></i></button>
-            <button ng-click="exportToExcel()" class="btn btn-success buttonbtn" title="Xuất file"><i
-                class="fas fa-fw fa-file-export"></i></button>
+            <!-- ////////////////////////////////// -->
+
             <button class="btn btn-success buttonbtn" title="Làm mới" ng-click="loadAll()"><i
                 class="fa-solid fa-rotate-right"></i></button>
             <button ng-click="openLichSuThaoTac()" class="btn btn-success buttonbtn" title="Lịch sử thao tác"><i
                 class="fa-solid fa-clock-rotate-left"></i> Lịch sử thao tác</button>
+            <input type="file" id="fileInput" style="display: none;" accept=".xls, .xlsx">
+            <button onclick="openExel()" class="btn btn-success buttonbtn">Mở file</button>
+            <button ng-click="importExel()" class="btn btn-success buttonbtn" title="Import"><i
+                class="fas fa-fw fa-file-import"></i></button>
+            <button ng-click="exportToExcel()" class="btn btn-success buttonbtn" title="Xuất file"><i
+                class="fas fa-fw fa-file-export"></i></button>
           </div>
 
         </div>
