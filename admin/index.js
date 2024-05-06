@@ -47,7 +47,7 @@ app.directive("ckEditor", function () {
         extraPlugins: "image",
         filebrowserImageUploadUrl:
           "https://api.cloudinary.com/v1_1/dmatlhayn/image/upload?upload_preset=ml_default", // Thay YOUR_CLOUD_NAME và YOUR_UPLOAD_PRESET bằng thông tin của bạn
-        cloudinary_api_key: "604239616556", // Thay YOUR_API_KEY bằng API key của bạn
+        cloudinary_api_key: "142065504487", // Thay YOUR_API_KEY bằng API key của bạn
       });
 
       if (!ngModel) return;
