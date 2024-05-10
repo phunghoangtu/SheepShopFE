@@ -30,16 +30,10 @@
           <div class="col-lg-7" style="padding: 10px 0;">
             <a href="#/products/add" class="btn btn-success buttonbtn" title="Thêm sản phẩm"><i
                 class="far fa-plus"></i></a>
-            <!-- ////////////////////////////////// -->
-
             <button class="btn btn-success buttonbtn" title="Làm mới" ng-click="loadAll()"><i
                 class="fa-solid fa-rotate-right"></i></button>
             <button ng-click="openLichSuThaoTac()" class="btn btn-success buttonbtn" title="Lịch sử thao tác"><i
-                class="fa-solid fa-clock-rotate-left"></i> Lịch sử thao tác</button>
-            <input type="file" id="fileInput" style="display: none;" accept=".xls, .xlsx">
-            <button onclick="openExel()" class="btn btn-success buttonbtn">Mở file</button>
-            <button ng-click="importExel()" class="btn btn-success buttonbtn" title="Import"><i
-                class="fas fa-fw fa-file-import"></i></button>
+                class="fa-solid fa-clock-rotate-left"></i> Lịch sử thao tác</button>           
             <button ng-click="exportToExcel()" class="btn btn-success buttonbtn" title="Xuất file"><i
                 class="fas fa-fw fa-file-export"></i></button>
           </div>
@@ -56,9 +50,7 @@
 
         <div class="card-body" style="padding-bottom: 0px;">
 
-
         </div>
-
 
         <div class="card">
           <div class="card-body">
@@ -183,7 +175,7 @@
                       <td>
                         <button class="btn btn-light buttonbtn" ng-click="openChiTiet(sp.id)"><i
                             class="fa-solid fa-circle-info"></i></button>
-                        <a href="#/products/update"><button class="btn btn-indigo"><i
+                        <a href="#/products/update/{{sp.id}}"><button class="btn btn-indigo"><i
                               class="fa-solid fa-pen-to-square"></i>
                             Sửa</button></a>
                         <a href=""><button ng-if="sp.status == 0" ng-click="delete(sp.id)" class="btn btn-indigo"><i

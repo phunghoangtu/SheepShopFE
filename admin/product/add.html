@@ -1,11 +1,26 @@
 <main id="main" class="main" style="margin-top: 60px;">
   <section class="section dashboard">
 
-    <div style="margin: 10px 0;">
-      <a href="#/products/view" class="btn btn-success" title="Quay về"><i class="bi bi-arrow-90deg-left"></i></a>
+    <div class="row">
+      <div class="col-lg-6">
+        <div style="margin: 10px 0;">
+          <a href="#/products/view" class="btn btn-success" title="Quay về"><i
+              class="bi bi-arrow-90deg-left"></i></a>
+          <div style="float: right;">
+            <input type="file" id="fileInput" style="display: none;"
+              accept=".xls, .xlsx">
+            <button onclick="openExel()" class="btn btn-success buttonbtn">Mở
+              file</button>
+            <button ng-click="importExel()" class="btn btn-success buttonbtn"
+              title="Import"><i
+                class="fas fa-fw fa-file-import"></i></button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="row">
+
       <div class="card">
         <div class="card-body">
 
@@ -16,23 +31,32 @@
                 <div class="row mb-3">
                   <div class="col-md-8 col-lg-12">
                     <div class="row">
-                      <h5 class="card-title" style="margin-left: 15px;">Ảnh đại diện sản phẩm <span
+                      <h5 class="card-title" style="margin-left: 15px;">Ảnh đại
+                        diện sản phẩm <span
                           style="color: red; font-size: 18px;">*</span></h5>
-                      <img id="output" alt="" />
+                      <img id="output" alt />
 
                       <div style="padding-top: 5px;">
-                        <button onclick="anhOpen()" class="btn btn-success" id="uploadButtonImage">Chọn ảnh</button>
-                        <input file-model="image" id="fileUpload" type="file" accept="image/*"
+                        <button onclick="anhOpen()" class="btn btn-success"
+                          id="uploadButtonImage">Chọn ảnh</button>
+                        <input file-model="image" id="fileUpload" type="file"
+                          accept="image/*"
                           onchange="loadFile1(event)" style="display: none;">
                       </div>
-                      <h5 class="card-title" style="margin-left: 15px;">Danh sách ảnh sản phẩm</h5>
+                      <h5 class="card-title" style="margin-left: 15px;">Danh
+                        sách ảnh sản phẩm</h5>
                       <div style="padding-top: 5px;">
-                        <input id="fileList" type="file" accept="image/*" multiple style="display: none;">
-                        <button ng-click="openImage()" class="btn btn-success" id="uploadButton">Chọn ảnh</button>
-                        <div id="imagePreviewContainer" ng-repeat="image in images" style="padding-top: 5px;">
+                        <input id="fileList" type="file" accept="image/*"
+                          multiple style="display: none;">
+                        <button ng-click="openImage()" class="btn btn-success"
+                          id="uploadButton">Chọn ảnh</button>
+                        <div id="imagePreviewContainer"
+                          ng-repeat="image in images" style="padding-top: 5px;">
                           <div class="image-wrapper">
-                            <img class="image" width="230px" ng-src="{{image}}" alt="" />
-                            <button class="delete-button" ng-click="deleteImage($index)"><i
+                            <img class="image" width="230px" ng-src="{{image}}"
+                              alt />
+                            <button class="delete-button"
+                              ng-click="deleteImage($index)"><i
                                 class="fa-solid fa-trash-can"></i></button>
                           </div>
                         </div>
@@ -50,11 +74,14 @@
                 <div class="col-lg-6">
 
                   <div class="row mb-3">
-                    <label for="" class="col-md-2 col-lg-3 col-form-label">Tên sản phẩm</label>
+                    <label for class="col-md-2 col-lg-3 col-form-label">Tên sản
+                      phẩm</label>
                     <div class="col-md-6">
-                      <input ng-model="form.product.name" type="text" class="form-control">
+                      <input ng-model="form.product.name" type="text"
+                        class="form-control">
                       <div ng-repeat="err in validationErrors">
-                        <span class="validate" ng-if="err.objectName == 'validateForm' && err.field == 'Name'">
+                        <span class="validate"
+                          ng-if="err.objectName == 'validateForm' && err.field == 'Name'">
                           {{err.defaultMessage}}
                         </span>
                       </div>
@@ -62,11 +89,14 @@
                   </div>
 
                   <div class="row mb-3">
-                    <label for="" class="col-md-2 col-lg-3 col-form-label">Giá bán</label>
+                    <label for class="col-md-2 col-lg-3 col-form-label">Giá
+                      bán</label>
                     <div class="col-md-6">
-                      <input ng-model="form.price" type="text" class="form-control">
+                      <input ng-model="form.price" type="text"
+                        class="form-control">
                       <div ng-repeat="err in validationErrors">
-                        <span class="validate" ng-if="err.objectName == 'validateForm' && err.field == 'Price'">
+                        <span class="validate"
+                          ng-if="err.objectName == 'validateForm' && err.field == 'Price'">
                           {{err.defaultMessage}}
                         </span>
                       </div>
@@ -74,53 +104,63 @@
                   </div>
 
                   <div class="row mb-3">
-                    <label for="" class="col-md-2 col-lg-3 col-form-label">Mô tả</label>
+                    <label for class="col-md-2 col-lg-3 col-form-label">Mô
+                      tả</label>
                     <div class="col-md-6">
-                      <input ng-model="form.description" type="text" class="form-control">
+                      <input ng-model="form.description" type="text"
+                        class="form-control">
                     </div>
                   </div>
 
                   <div class="row mb-3">
-                    <label for="" class="col-md-2 col-lg-3 col-form-label">Danh mục</label>
+                    <label for class="col-md-2 col-lg-3 col-form-label">Danh
+                      mục</label>
                     <div class="col-md-6">
                       <select id="category" class="form-select-sm">
-                        <option ng-repeat="danhmuc in listCategory" value="{{danhmuc.id}}">
+                        <option ng-repeat="danhmuc in listCategory"
+                          value="{{danhmuc.id}}">
                           {{danhmuc.name}}</option>
                       </select>
                     </div>
                   </div>
 
                   <div class="row mb-3">
-                    <label for="" class="col-md-2 col-lg-3 col-form-label">Thương hiệu</label>
+                    <label for class="col-md-2 col-lg-3 col-form-label">Thương
+                      hiệu</label>
                     <div class="col-md-6">
                       <select id="brand" class="form-select-sm">
-                        <option ng-repeat="thuonghieu in listBrand" value="{{thuonghieu.id}}">
+                        <option ng-repeat="thuonghieu in listBrand"
+                          value="{{thuonghieu.id}}">
                           {{thuonghieu.name}}</option>
                       </select>
                     </div>
                   </div>
 
                   <div class="row mb-3">
-                    <label for="fullName" class="col-md-2 col-lg-3 col-form-label">Thiết kế</label>
+                    <label for="fullName"
+                      class="col-md-2 col-lg-3 col-form-label">Thiết kế</label>
                     <div class="col-md-6">
                       <select id="design" class="form-select-sm">
-                        <option ng-repeat="thietke in listDesign" value="{{thietke.id}}">
+                        <option ng-repeat="thietke in listDesign"
+                          value="{{thietke.id}}">
                           {{thietke.name}}</option>
                       </select>
                     </div>
                   </div>
-
-                  <button class="btn btn-success" ng-click="add()"><i class="fa-solid fa-plus"></i> Thêm</button>
                 </div>
 
                 <div class="col-lg-6">
 
                   <div class="row mb-3">
-                    <label for="fullName" class="col-md-2 col-lg-3 col-form-label">Chất liệu</label>
+                    <label for="fullName"
+                      class="col-md-2 col-lg-3 col-form-label">Chất liệu</label>
                     <div class="col-md-12">
-                      <span style="padding-left: 5px" ng-repeat="chatlieu in listMaterial">
-                        <input id="Material{{chatlieu.id}}" type="checkbox" value="{{chatlieu.id}}"> {{chatlieu.name}}
-                      </span> <button ng-click="themChatLieu()" class="addttsp1"><i
+                      <span style="padding-left: 5px"
+                        ng-repeat="chatlieu in listMaterial">
+                        <input id="Material{{chatlieu.id}}" type="checkbox"
+                          value="{{chatlieu.id}}"> {{chatlieu.name}}
+                      </span> <button ng-click="themChatLieu()"
+                        class="addttsp1"><i
                           class="fa-solid fa-plus"></i></button>
                     </div>
                   </div>
@@ -128,18 +168,24 @@
                   <div class="row mb-3">
 
                     <div class="col-md-12">
-                      <span style="padding-right: 20px;">Màu Sắc <span class="vaid">*</span></span>
+                      <span style="padding-right: 20px;">Màu Sắc <span
+                          class="vaid">*</span></span>
                       <span ng-repeat="mausac in listColor">
-                        <input type="checkbox" id="Color{{mausac.id}}" ng-click="checkbox(mausac.id)">{{mausac.name}}
+                        <input type="checkbox" id="Color{{mausac.id}}"
+                          ng-click="checkbox(mausac.id)">{{mausac.name}}
                       </span>
-                      <button ng-click="themMauSac()" class="addttsp1"><i class="fa-solid fa-plus"></i></button>
+                      <button ng-click="themMauSac()" class="addttsp1"><i
+                          class="fa-solid fa-plus"></i></button>
                       <div>
                         <div ng-repeat="mausac in listColor">
-                          <div ng-show="colorStates[mausac.id]" style="padding-top: 15px;">
+                          <div ng-show="colorStates[mausac.id]"
+                            style="padding-top: 15px;">
                             <label>Số lượng màu {{ mausac.name }}</label>
                             <br>
-                            <button style="border-radius: 5px;width: 25px;background-color: black;color: white;"
-                              ng-click="themkichthuoc(mausac.id)"><i class="fa-solid fa-plus"></i></button>
+                            <button
+                              style="border-radius: 5px;width: 25px;background-color: black;color: white;"
+                              ng-click="themkichthuoc(mausac.id)"><i
+                                class="fa-solid fa-plus"></i></button>
                             <!-- Hiển thị danh sách kích thước và số lượng -->
                             <div ng-repeat="(idColor, sizes) in colorSizes">
                               <!-- Tạo một biến để lưu trữ tên màu sắc tương ứng -->
@@ -148,28 +194,36 @@
                                 <span ng-repeat="s in listSize">
                                   <span ng-repeat="size in sizes">
                                     <span ng-if="size.size == s.id">
-                                      <span style="padding-left: 10px; padding-bottom: 10px">Size</span> {{ s.name }} <input
-                                        class="han" id="Color{{ mausac.id }}Size{{ s.id }}" type="number" value="{{size.quantity}}"
+                                      <span
+                                        style="padding-left: 10px; padding-bottom: 10px">Size</span>
+                                      {{ s.name }} <input
+                                        class="han"
+                                        id="Color{{ mausac.id }}Size{{ s.id }}"
+                                        type="number" value="{{size.quantity}}"
                                         style="width: 50px">
-                                      <button ng-click="removeItemBySize(mausac.id,size.size)"
-                                        style="color: rgb(247, 3, 3);border: none;"><i class="fa-solid fa-trash"></i></button>
+                                      <button
+                                        ng-click="removeItemBySize(mausac.id,size.size)"
+                                        style="color: rgb(247, 3, 3);border: none;"><i
+                                          class="fa-solid fa-trash"></i></button>
                                     </span>
                                   </span>
                                 </span>
-            
+
                               </span>
                             </div>
                           </div>
                         </div>
                         <div class="col-md-12 add">
-                          Chương trình khuyến mãi <button ng-click="themChuongTrinh()" class="addttsp1"><i
+                          Chương trình khuyến mãi <button
+                            ng-click="themChuongTrinh()" class="addttsp1"><i
                               class="fa-solid fa-plus"></i></button>
-            
+
                           <span ng-repeat="v in listVoucher">
                             <span ng-repeat="vo in voucherList">
                               <span ng-if="v.id == vo.id">
                                 <div>
-                                  <input type="hidden" id="Voucher{{v.id}}" value="{{v.id}}">- {{v.name}} [{{v.code}}]
+                                  <input type="hidden" id="Voucher{{v.id}}"
+                                    value="{{v.id}}">- {{v.name}} [{{v.code}}]
                                   <button ng-click="removeVoucher(v.id)"
                                     style="font-size: 20px;background-color: white;color: rgb(247, 3, 3);border: none;"><i
                                       class="fa-solid fa-xmark"></i></button>
@@ -178,43 +232,56 @@
                             </span>
                           </span>
                         </div>
-            
-                      </div>
-             
 
+                      </div>
+
+                    </div>
+
+                    <div class="col-mb-3">
+                      Giảm Giá
+                      <span style="padding-left: 10px;"><input
+                          ng-click="giamGia()" id="giamGia"
+                          type="checkbox"></span>
+                      <div id="giamGia1" style="display: none;"
+                        class="custom-radio">
+                        <input ng-click="giamGia1()" type="radio" name="giamGia"
+                          checked id="khongGioiHan">
+                        <label for="khongGioiHan">Thời gian không giới
+                          hạn</label>
+                        <input ng-click="giamGia1()" type="radio" name="giamGia"
+                          id="tamThoi">
+                        <label for="tamThoi">Thời gian tạm thời</label>
+                      </div>
+                      <div id="khongGioiHan1" style="display: none;">
+                        Phần trăm giảm giá
+                        <input class="haninput" id="phanTramGiamGia">
+                        <div ng-repeat="err in validationErrors">
+                          <span class="validate"
+                            ng-if="err.objectName == 'validateForm' && err.field == 'Discount'">
+                            {{err.defaultMessage}}
+                          </span>
+                        </div>
+                      </div>
+                      <div id="tamThoi1" style="display: none;">
+                        Phần trăm giảm giá
+                        <input class="haninput" id="phanTramGiamGia1">
+                        <div ng-repeat="err in validationErrors">
+                          <span class="validate"
+                            ng-if="err.objectName == 'validateForm' && err.field == 'Discount'">
+                            {{err.defaultMessage}}
+                          </span>
+                        </div>
+                        Ngày kết thúc
+                        <input class="haninput" type="date"
+                          id="thoiGianGiamGia">
+                      </div>
+                    </div>
 
                   </div>
 
-                  <div class="col-mb-3">
-                    Giảm Giá
-                    <span style="padding-left: 10px;"><input ng-click="giamGia()" id="giamGia"
-                        type="checkbox"></span>
-                    <div id="giamGia1" style="display: none;" class="custom-radio">
-                      <input ng-click="giamGia1()" type="radio" name="giamGia" checked id="khongGioiHan">
-                      <label for="khongGioiHan">Thời gian không giới hạn</label>
-                      <input ng-click="giamGia1()" type="radio" name="giamGia" id="tamThoi">
-                      <label for="tamThoi">Thời gian tạm thời</label>
-                    </div>
-                    <div id="khongGioiHan1" style="display: none;">
-                      Phần trăm giảm giá
-                      <input class="haninput" id="phanTramGiamGia">
-                      <div ng-repeat="err in validationErrors">
-                        <span class="validate" ng-if="err.objectName == 'validateForm' && err.field == 'Discount'">
-                          {{err.defaultMessage}}
-                        </span>
-                      </div>
-                    </div>
-                    <div id="tamThoi1" style="display: none;">
-                      Phần trăm giảm giá
-                      <input class="haninput" id="phanTramGiamGia1">
-                      <div ng-repeat="err in validationErrors">
-                        <span class="validate" ng-if="err.objectName == 'validateForm' && err.field == 'Discount'">
-                          {{err.defaultMessage}}
-                        </span>
-                      </div>
-                      Ngày kết thúc
-                      <input class="haninput" type="date" id="thoiGianGiamGia">
-                    </div>
+                  <div class="row mb-3">
+                    <button class="btn btn-success" ng-click="add()"><i
+                        class="fa-solid fa-plus"></i> Thêm</button>
                   </div>
 
                 </div>
@@ -222,33 +289,33 @@
               </div>
 
             </div>
-
           </div>
         </div>
       </div>
+      
+    </div>
 
-
-
-      <div class="popup" ng-class="{ 'show': isPopupVisible }">
-        <div class="popup-content1">
-          <!-- Nội dung của popup -->
-          <h1>Thêm số lượng </h1>
-          <button ng-click="themKichThuoc()" class="addttsp2"><i class="fa-solid fa-plus"></i></button>
-          <select class="haninput2" id="sizehan">
-            <option ng-repeat="size in listSize" value="{{size.id}}">Size {{size.name}}</option>
-          </select>
-          <div style="padding-top: 10px;">
-            <input class="input-group-text" type="number" id="quantitysize" placeholder="Số lượng">
-          </div>
-          <div style="padding-top: 10px;">
-            <button class="btn btn-primary" ng-click="themkichthuoc()">X</button>
-            <button class="btn btn-dark" ng-click="addItem()">Thêm</button>
-          </div>
-
-
+    <div class="popup" ng-class="{ 'show': isPopupVisible }">
+      <div class="popup-content1">
+        <!-- Nội dung của popup -->
+        <h1>Thêm số lượng </h1>
+        <button ng-click="themKichThuoc()" class="addttsp2"><i
+            class="fa-solid fa-plus"></i></button>
+        <select class="haninput2" id="sizehan">
+          <option ng-repeat="size in listSize" value="{{size.id}}">Size
+            {{size.name}}</option>
+        </select>
+        <div style="padding-top: 10px;">
+          <input class="input-group-text" type="number" id="quantitysize"
+            placeholder="Số lượng">
         </div>
-      </div>
+        <div style="padding-top: 10px;">
+          <button class="btn btn-primary" ng-click="themkichthuoc()">X</button>
+          <button class="btn btn-dark" ng-click="addItem()">Thêm</button>
+        </div>
 
+      </div>
+    </div>
 
   </section>
 </main>
